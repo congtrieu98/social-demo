@@ -16,7 +16,7 @@ export default function PostList({ posts }: { posts: CompletePost[] }) {
 
   return (
     <ul>
-      {p.posts.map((post) => (
+      {p.posts.map((post: CompletePost) => (
         <Post post={post} key={post.id} />
       ))}
     </ul>

@@ -22,6 +22,7 @@ export const postsRouter = router({
   updatePost: publicProcedure
     .input(updatePostParams)
     .mutation(async ({ input }) => {
+      console.log("data uodate possssssssss",input)
       return updatePost(input.id, input);
     }),
   deletePost: publicProcedure

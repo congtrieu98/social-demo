@@ -27,6 +27,7 @@ export const updatePost = async (id: PostId, post: UpdatePostParams) => {
   const { id: postId } = postIdSchema.parse({ id });
   const newPost = updatePostSchema.parse({ ...post, userId: session?.user.id! });
   try {
+    console.log("postId để so sánh với db:", postId)
     // @ts-ignore
     const p = await db.post.update({ where: { id: postId, userId: session?.user.id! }, data: newPost})
     return { post: p };

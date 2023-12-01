@@ -3,6 +3,7 @@
 import { Post, NewPostParams, insertPostParams } from "@/lib/db/schema/posts";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import slugify from "slugify";
 
 import {
   Form,
@@ -27,7 +28,7 @@ const PostForm = ({
   closeModal: () => void;
 }) => {
   const { toast } = useToast();
-  
+
   const editing = !!post?.id;
 
   const router = useRouter();
@@ -40,16 +41,17 @@ const PostForm = ({
     resolver: zodResolver(insertPostParams),
     defaultValues: post ?? {
       title: "",
-     slug: "",
-     content: ""
+      slug: "",
+      content: "",
     },
   });
-
+  console.log(editing)
   const onSuccess = async (action: "create" | "update" | "delete") => {
     await utils.posts.getPosts.invalidate();
     router.refresh();
-    closeModal();toast({
-      title: 'Success',
+    closeModal();
+    toast({
+      title: "Success",
       description: `Post ${action}d!`,
       variant: "default",
     });
@@ -77,17 +79,31 @@ const PostForm = ({
       createPost(values);
     }
   };
+
+  const handleChangeSlug = (e: any) => {
+    const rs = slugify(e.target.value, {
+      replacement: "-",
+      remove: undefined,
+      strict: false,
+      lower: true,
+      trim: true,
+    });
+    form.setValue("slug", rs);
+    form.setValue("title", e.target.value);
+  };
+
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(handleSubmit)} className={"space-y-8"}>
         <FormField
           control={form.control}
           name="title"
-          render={({ field }) => (<FormItem>
+          render={({ field }) => (
+            <FormItem>
               <FormLabel>Title</FormLabel>
-                <FormControl>
-            <Input {...field} />
-          </FormControl>
+              <FormControl onChange={handleChangeSlug}>
+                <Input {...field} />
+              </FormControl>
 
               <FormMessage />
             </FormItem>
@@ -96,11 +112,12 @@ const PostForm = ({
         <FormField
           control={form.control}
           name="slug"
-          render={({ field }) => (<FormItem>
+          render={({ field }) => (
+            <FormItem>
               <FormLabel>Slug</FormLabel>
-                <FormControl>
-            <Input {...field} />
-          </FormControl>
+              <FormControl>
+                <Input {...field} disabled />
+              </FormControl>
 
               <FormMessage />
             </FormItem>
@@ -109,11 +126,12 @@ const PostForm = ({
         <FormField
           control={form.control}
           name="content"
-          render={({ field }) => (<FormItem>
+          render={({ field }) => (
+            <FormItem>
               <FormLabel>Content</FormLabel>
-                <FormControl>
-            <Input {...field} />
-          </FormControl>
+              <FormControl>
+                <Input {...field} />
+              </FormControl>
 
               <FormMessage />
             </FormItem>
