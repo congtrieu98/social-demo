@@ -16,7 +16,7 @@ export default function FeedList({ feeds }: { feeds: CompleteFeed[] }) {
 
   return (
     <ul>
-      {f.feeds.map((feed) => (
+      {f.feeds.map((feed: CompleteFeed) => (
         <Feed feed={feed} key={feed.id} />
       ))}
     </ul>
