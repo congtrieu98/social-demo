@@ -26,8 +26,16 @@ export default function PostList({ posts }: { posts: CompletePost[] }) {
 const Post = ({ post }: { post: CompletePost }) => {
   return (
     <li className="flex justify-between my-2">
-      <div className="w-full">
-        <div>{post.title}</div>
+      <div className="grid grid-cols-3 w-full space-x-3">
+        <div className="w-full">
+          <div>{post.title}</div>
+        </div>
+        <div className="w-full">
+          <div>{post.slug}</div>
+        </div>
+        <div className="w-full">
+          <div>{post.content}</div>
+        </div>
       </div>
       <PostModal post={post} />
     </li>
