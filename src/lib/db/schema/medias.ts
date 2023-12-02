@@ -7,7 +7,7 @@ import { getMedias } from "@/lib/api/medias/queries";
 export const insertMediaSchema = mediaSchema.omit({ id: true });
 
 export const insertMediaParams = mediaSchema.extend({
-  feedId: z.coerce.string()
+  // feedId: z.coerce.string()
 }).omit({
   id: true
 });
@@ -15,7 +15,7 @@ export const insertMediaParams = mediaSchema.extend({
 export const updateMediaSchema = mediaSchema;
 
 export const updateMediaParams = updateMediaSchema.extend({
-  feedId: z.coerce.string()
+  // feedId: z.coerce.string()
 })
 
 export const mediaIdSchema = updateMediaSchema.pick({ id: true });
@@ -26,7 +26,7 @@ export type NewMedia = z.infer<typeof insertMediaSchema>;
 export type NewMediaParams = z.infer<typeof insertMediaParams>;
 export type UpdateMediaParams = z.infer<typeof updateMediaParams>;
 export type MediaId = z.infer<typeof mediaIdSchema>["id"];
-export type FeedId = z.infer<typeof insertMediaParams>["feedId"];
+// export type FeedId = z.infer<typeof insertMediaParams>["feedId"];
 
 // this type infers the return from getMedias() - meaning it will include any joins
 export type CompleteMedia = Awaited<ReturnType<typeof getMedias>>["medias"][number];
