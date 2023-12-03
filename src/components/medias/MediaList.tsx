@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 "use client";
 import { CompleteMedia } from "@/lib/db/schema/medias";
 import { trpc } from "@/lib/trpc/client";
@@ -24,11 +25,35 @@ export default function MediaList({ medias }: { medias: CompleteMedia[] }) {
 }
 
 const Media = ({ media }: { media: CompleteMedia }) => {
+  console.log(media)
   return (
     <li className="flex justify-between my-2">
-      <div className="w-full">
-        <div>{media.url}</div>
+      <div className="grid grid-cols-3 space-x-3">
+        <div className="flex flex-col">
+          <h1 className="font-bold">Image</h1>
+          <div className="w-full">
+            <img
+              src={media.url}
+              alt={media.url}
+              className="h-[50px] w-[50px] object-contain rounded-md"
+            />
+          </div>
+        </div>
+
+        <div className="flex flex-col">
+          <h1 className="font-bold">Content</h1>
+          <div className="w-full">
+            <div className="p-2">{media.feed.content}</div>
+          </div>
+        </div>
+        <div className="flex flex-col">
+          <h1 className="font-bold">FeedId</h1>
+          <div className="w-full">
+            <div className="p-2">{media.feedId}</div>
+          </div>
+        </div>
       </div>
+
       <MediaModal media={media} />
     </li>
   );

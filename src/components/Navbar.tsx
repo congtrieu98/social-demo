@@ -26,6 +26,7 @@ export default async function Navbar() {
           <Link href="/" className="hover:opacity-75">Logo</Link>
           <Link href="/posts" className="hover:opacity-75">Posts</Link>
           <Link href="/feeds" className="hover:opacity-75">Feeds</Link>
+          <Link href="/medias" className="hover:opacity-75">Medias</Link>
         </h1>
         <div className="space-x-2 flex items-center">
           <ModeToggle />

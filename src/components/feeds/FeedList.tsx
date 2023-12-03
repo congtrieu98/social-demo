@@ -28,7 +28,6 @@ export default function FeedList({ feeds }: { feeds: CompleteFeed[] }) {
 }
 
 const Feed = ({ feed }: { feed: CompleteFeed }) => {
-  console.log(feed)
   return (
     <li className="flex-col justify-between my-2">
       {feed.medias.length > 0 && (
