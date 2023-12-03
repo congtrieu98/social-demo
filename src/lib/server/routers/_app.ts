@@ -4,6 +4,7 @@ import { postsRouter } from "./posts";
 import { feedsRouter } from "./feeds";
 import { mediasRouter } from "./medias";
 import { usersRouter } from "./users";
+import { followsRouter } from "./follows";
 
 export const appRouter = router({
   computers: computersRouter,
@@ -11,6 +12,7 @@ export const appRouter = router({
   feeds: feedsRouter,
   medias: mediasRouter,
   users: usersRouter,
+  follows: followsRouter,
 });
 
 export type AppRouter = typeof appRouter;
