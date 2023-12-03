@@ -5,7 +5,7 @@ import { type FeedId, feedIdSchema } from "@/lib/db/schema/feeds";
 export const getFeeds = async () => {
   const { session } = await getUserAuth();
   // @ts-ignore
-  const f = await db.feed.findMany({ where: { userId: session?.user.id! } });
+  const f = await db.feed.findMany({ where: { userId: session?.user.id! }, include: { medias: true } });
   return { feeds: f };
 };
 

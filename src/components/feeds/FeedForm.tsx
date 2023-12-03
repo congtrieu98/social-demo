@@ -141,8 +141,6 @@ const FeeForm = ({
     // @ts-ignore
     setFiles((files) => files.filter((file) => file.path !== path));
   };
-
-  console.log(files)
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(handleSubmit)} className={"space-y-8"}>

@@ -5,7 +5,7 @@ import { checkAuth } from "@/lib/auth/utils";
 
 export default async function Feeds() {
   await checkAuth();
-  const { feeds } = await getFeeds();  
+  const { feeds } = await getFeeds();
 
   return (
     <main className="max-w-3xl mx-auto p-5 md:p-0 sm:pt-4">

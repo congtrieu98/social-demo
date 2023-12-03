@@ -45,7 +45,6 @@ const PostForm = ({
       content: "",
     },
   });
-  console.log(editing)
   const onSuccess = async (action: "create" | "update" | "delete") => {
     await utils.posts.getPosts.invalidate();
     router.refresh();
@@ -86,6 +85,7 @@ const PostForm = ({
       remove: undefined,
       strict: false,
       lower: true,
+      locale: 'vi',
       trim: true,
     });
     form.setValue("slug", rs);

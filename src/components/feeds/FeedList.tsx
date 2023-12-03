@@ -1,7 +1,11 @@
+/* eslint-disable @next/next/no-img-element */
 "use client";
 import { CompleteFeed } from "@/lib/db/schema/feeds";
 import { trpc } from "@/lib/trpc/client";
 import FeedModal from "./FeedModal";
+import { Carousel } from 'react-responsive-carousel';
+import "react-responsive-carousel/lib/styles/carousel.min.css";
+import { Key } from "react";
 
 
 export default function FeedList({ feeds }: { feeds: CompleteFeed[] }) {
@@ -26,10 +30,21 @@ export default function FeedList({ feeds }: { feeds: CompleteFeed[] }) {
 const Feed = ({ feed }: { feed: CompleteFeed }) => {
   console.log(feed)
   return (
-    <li className="flex justify-between my-2">
-      <div className="w-full">
-        <div>{feed.content}</div>
-      </div>
+    <li className="flex-col justify-between my-2">
+      {feed.medias.length > 0 && (
+        <Carousel showThumbs={false}>
+          {feed.medias.map((media: { id: Key | null | undefined; url: string; }) => (
+            <div className="flex flex-col justify-center items-center w-full space-y-3" key={feed.id}>
+              <div className="mt-2 text-center">{feed.content}</div>
+              <img
+                src={media.url}
+                alt={media.url}
+                className="h-[100px] w-[100px] object-contain rounded-md"
+              />
+            </div>
+          ))}
+        </Carousel>
+      )}
       <FeedModal feed={feed} />
     </li>
   );
