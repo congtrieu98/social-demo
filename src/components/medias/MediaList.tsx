@@ -25,7 +25,6 @@ export default function MediaList({ medias }: { medias: CompleteMedia[] }) {
 }
 
 const Media = ({ media }: { media: CompleteMedia }) => {
-  console.log(media)
   return (
     <li className="flex justify-between my-2">
       <div className="grid grid-cols-3 space-x-3">
