@@ -11,6 +11,7 @@ import {
 export const createFollow = async (follow: NewFollowParams) => {
   const newFollow = insertFollowSchema.parse(follow);
   try {
+    // @ts-ignore
     const f = await db.follow.create({ data: newFollow });
     return { follow: f };
   } catch (err) {
@@ -24,6 +25,7 @@ export const updateFollow = async (id: FollowId, follow: UpdateFollowParams) => 
   const { id: followId } = followIdSchema.parse({ id });
   const newFollow = updateFollowSchema.parse(follow);
   try {
+    // @ts-ignore
     const f = await db.follow.update({ where: { id: followId }, data: newFollow})
     return { follow: f };
   } catch (err) {
@@ -36,6 +38,7 @@ export const updateFollow = async (id: FollowId, follow: UpdateFollowParams) => 
 export const deleteFollow = async (id: FollowId) => {
   const { id: followId } = followIdSchema.parse({ id });
   try {
+    // @ts-ignore
     const f = await db.follow.delete({ where: { id: followId }})
     return { follow: f };
   } catch (err) {

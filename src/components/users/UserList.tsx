@@ -26,6 +26,12 @@ export default function UserList({ users }: { users: CompleteUser[] }) {
 }
 
 const User = ({ user }: { user: CompleteUser }) => {
+    const handleClickFollow = (e: React.MouseEvent, id: string) => {
+        e.preventDefault();
+        console.log(id)
+        // console.log(user?.followers)
+
+    }
     return (
         <li className="flex justify-between my-2">
             <div className="w-full">
@@ -35,7 +41,7 @@ const User = ({ user }: { user: CompleteUser }) => {
                 <div>{user.email}</div>
             </div>
             <div className="w-full">
-                <Button>Follow</Button>
+                <Button onClick={(e) => handleClickFollow(e, user.id)}>Follow</Button>
             </div>
         </li >
     );
@@ -44,9 +50,9 @@ const User = ({ user }: { user: CompleteUser }) => {
 const EmptyState = () => {
     return (
         <div className="text-center">
-            <h3 className="mt-2 text-sm font-semibold text-gray-900">No posts</h3>
+            <h3 className="mt-2 text-sm font-semibold text-gray-900">No User</h3>
             <p className="mt-1 text-sm text-gray-500">
-                Get started by creating a new post.
+                Get started by creating a new User.
             </p>
         </div>
     );
