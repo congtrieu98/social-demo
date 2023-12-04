@@ -9,18 +9,18 @@ import UserAlert from "./UserAlert";
 
 export default function UserList({ users }: { users: CompleteUser[] }) {
 
-  const { data: u } = trpc.users.getUsers.useQuery(undefined, {
+  const { data: user } = trpc.users.getUsers.useQuery(undefined, {
     initialData: { users },
     refetchOnMount: false,
   });
 
-  if (u.users.length === 0) {
+  if (user.users.length === 0) {
     return <EmptyState />;
   }
 
   return (
     <ul>
-      {u.users.map((user: CompleteUser) => (
+      {user.users.map((user: CompleteUser) => (
         <User user={user} key={user.id} />
       ))}
     </ul>
@@ -54,7 +54,7 @@ const User = ({ user }: { user: CompleteUser }) => {
     // Id people followed
     const followedId = id;
     // Kiểm tra người đi follow đã follow người đang định follow hay chưa
-    
+
     // @ts-ignore
     const isFollowed = user?.followers.find((item) => item.followedId === followedId && item.followerId === followerId);
     if (!isFollowed) {
@@ -74,16 +74,16 @@ const User = ({ user }: { user: CompleteUser }) => {
       </div>
       <div className="w-full">
         {
-        // @ts-ignore
-        user.followers.length > 0 ? (
-          <UserAlert id={
-            // @ts-ignore
-            (user.followers?.find(item => item?.followedId === user?.id))?.id as string
-        } />
-        ) : (<Button onClick={(e) => handleClickFollow(e, user.id)}>
+          // @ts-ignore
+          user.followers.length > 0 ? (
+            <UserAlert id={
+              // @ts-ignore
+              (user.followers?.find(item => item?.followedId === user?.id))?.id as string
+            } />
+          ) : (<Button onClick={(e) => handleClickFollow(e, user.id)}>
             Follo{isFollowing ? 'wing...' : 'w'}
           </Button>
-        )}
+          )}
       </div>
     </li>
   );
