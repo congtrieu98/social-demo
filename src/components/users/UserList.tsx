@@ -75,7 +75,9 @@ const User = ({ user }: { user: CompleteUser }) => {
         <div>{user.email}</div>
       </div>
       <div className="w-full">
-        {user.followers.length > 0 ? (
+        {
+        // @ts-ignore
+        user.followers.length > 0 ? (
           <UserAlert id={
             // @ts-ignore
             (user.followers?.find(item => item?.followedId === user?.id))?.id as string
