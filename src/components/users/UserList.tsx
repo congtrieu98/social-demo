@@ -56,7 +56,9 @@ const User = ({ user }: { user: CompleteUser }) => {
         // Id people followed
         const followedId = id
         // Kiểm tra người đi follow đã follow người đang định follow hay chưa
-        const isFollowed = !!(user?.followers.find(item => item.followedId === followedId && item.followerId === followerId));
+        
+        //@ts-ignore
+        const isFollowed = user?.followers.find(item => item.followedId === followedId && item.followerId === followerId);
         if (isFollowed) {
             toast({
               title: 'Confirmation',
@@ -81,7 +83,10 @@ const User = ({ user }: { user: CompleteUser }) => {
             </div>
             <div className="w-full">
                 <Button onClick={(e) => handleClickFollow(e, user.id)}>
-                    { user.followers.length > 0 ? "Following" : "Follow" }
+                    { 
+                    // @ts-ignore
+                        user.followers.length > 0 ? "Following" : "Follow" 
+                    }
                 </Button>
             </div>
         </li >
