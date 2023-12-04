@@ -3,6 +3,7 @@ import { db } from "@/lib/db/index";
 import { 
   insertFollowSchema,
   NewFollowParams,
+  FollowId
 } from "@/lib/db/schema/follows";
 
 
@@ -31,3 +32,16 @@ export const createFollowUser = async (follow: NewFollowParams) => {
     return { error: message };
   }
 };
+
+export const unFollowUser = async (id: FollowId ) => {
+  try {
+    // @ts-ignore
+    const u = await db.follow.delete({ where: {id : id}})
+    return { users: u };
+  } catch (err) {
+    const message = (err as Error).message ?? "Error, please try again";
+    console.error(message);
+    return { error: message };
+  }
+  
+}
