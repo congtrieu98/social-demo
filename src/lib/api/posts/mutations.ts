@@ -38,10 +38,10 @@ export const createPost = async (post: NewPostParams) => {
           const newPost = insertPostSchema.parse({ ...post, userId: session?.user.id! });
           try {
             const p = await db.post.create({ data: newPost });
-            if(p) {
-              const u = await db.user.findMany({ where: { id:  session?.user.id  } , include: { followers: true } });
-              if(u){
-                u.forEach( async (follower : any) => {
+            if (p) {
+              const u = await db.user.findMany({ where: { id: session?.user.id }, include: { followers: true } });
+              if (u) {
+                u.forEach(async (follower: any) => {
                   const { name, email } = follower;
                   await resend.emails.send({
                     from: "Kirimase <onboarding@resend.dev>",
@@ -64,7 +64,7 @@ export const createPost = async (post: NewPostParams) => {
       },
     },
   });
-  await prisma.post.create({data : newPost})
+  await prisma.post.create({ data: newPost })
 };
 
 export const updatePost = async (id: PostId, post: UpdatePostParams) => {
@@ -72,7 +72,6 @@ export const updatePost = async (id: PostId, post: UpdatePostParams) => {
   const { id: postId } = postIdSchema.parse({ id });
   const newPost = updatePostSchema.parse({ ...post, userId: session?.user.id! });
   try {
-    console.log("postId để so sánh với db:", postId)
     // @ts-ignore
     const p = await db.post.update({ where: { id: postId, }, data: newPost })
     console.log('newPost:', p)

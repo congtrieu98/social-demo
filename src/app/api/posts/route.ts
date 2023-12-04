@@ -7,27 +7,28 @@ import {
   deletePost,
   updatePost,
 } from "@/lib/api/posts/mutations";
-import { 
+import {
   postIdSchema,
   insertPostParams,
-  updatePostParams 
+  updatePostParams
 } from "@/lib/db/schema/posts";
 
-export async function POST(req: Request) {
-  try {
-    const validatedData = insertPostParams.parse(await req.json());
-    const { post, error } = await createPost(validatedData);
-    if (error) return NextResponse.json({ error }, { status: 500 });
-    revalidatePath("/posts"); // optional - assumes you will have named route same as entity
-    return NextResponse.json(post, { status: 201 });
-  } catch (err) {
-    if (err instanceof z.ZodError) {
-      return NextResponse.json({ error: err.issues }, { status: 400 });
-    } else {
-      return NextResponse.json({ error: err }, { status: 500 });
-    }
-  }
-}
+// export async function POST(req: Request) {
+//   try {
+//     const validatedData = insertPostParams.parse(await req.json());
+//     //
+//     const { post, error } = await createPost(validatedData);
+//     if (error) return NextResponse.json({ error }, { status: 500 });
+//     revalidatePath("/posts"); // optional - assumes you will have named route same as entity
+//     return NextResponse.json(post, { status: 201 });
+//   } catch (err) {
+//     if (err instanceof z.ZodError) {
+//       return NextResponse.json({ error: err.issues }, { status: 400 });
+//     } else {
+//       return NextResponse.json({ error: err }, { status: 500 });
+//     }
+//   }
+// }
 
 
 export async function PUT(req: Request) {
