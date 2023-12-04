@@ -9,6 +9,7 @@ import {
 export const createFollowUser = async (follow: NewFollowParams) => {
   const newFollow = insertFollowSchema.parse(follow);
   try {
+    // @ts-ignore
     const f = await db.follow.create({
       data: {
         follower: {
