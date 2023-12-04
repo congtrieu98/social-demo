@@ -39,9 +39,9 @@ export const createPost = async (post: NewPostParams) => {
           try {
             const p = await db.post.create({ data: newPost });
             if (p) {
-              const u = await db.user.findMany({ where: { id: session?.user.id }, include: { followers: true } });
-              if (u) {
-                u.forEach(async (follower: any) => {
+              const user = await db.user.findMany({ where: { id: session?.user.id }, include: { followers: true } });
+              if (user) {
+                user.forEach(async (follower: any) => {
                   const { name, email } = follower;
                   await resend.emails.send({
                     from: "Kirimase <onboarding@resend.dev>",
