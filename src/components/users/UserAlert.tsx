@@ -31,13 +31,13 @@ export default function UserAlert({ id }: { id: string }) {
       variant: "default",
     });
   };
-  const { mutate: unfollowUser } = trpc.users.unFollowUser.useMutation({
+  const { mutate: unfollowUser, isLoading: isUnfollowing } = trpc.users.unFollowUser.useMutation({
     onSuccess: () => onSuccess("success"),
   });
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>
-        <Button>Unfollow</Button>
+        <Button>Unfollo{isUnfollowing ? 'wing...' : 'w' }</Button>
       </AlertDialogTrigger>
       <AlertDialogContent>
         <AlertDialogHeader>

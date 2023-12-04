@@ -3,13 +3,11 @@ import { CompleteUser } from "@/lib/db/schema/users";
 import { trpc } from "@/lib/trpc/client";
 import { Button } from "../ui/button";
 import React from "react";
-import { useSession } from "next-auth/react";
 import { useToast } from "../ui/use-toast";
 import { useRouter } from "next/navigation";
 import UserAlert from "./UserAlert";
 
 export default function UserList({ users }: { users: CompleteUser[] }) {
-  const { data: session, status } = useSession();
 
   const { data: u } = trpc.users.getUsers.useQuery(undefined, {
     initialData: { users },
@@ -45,7 +43,7 @@ const User = ({ user }: { user: CompleteUser }) => {
     });
   };
 
-  const { mutate: followerUser } = trpc.users.createFollowUser.useMutation({
+  const { mutate: followerUser, isLoading: isFollowing } = trpc.users.createFollowUser.useMutation({
     onSuccess: () => onSuccess("success"),
   });
 
@@ -83,7 +81,7 @@ const User = ({ user }: { user: CompleteUser }) => {
             (user.followers?.find(item => item?.followedId === user?.id))?.id as string
         } />
         ) : (<Button onClick={(e) => handleClickFollow(e, user.id)}>
-            Follow
+            Follo{isFollowing ? 'wing...' : 'w'}
           </Button>
         )}
       </div>
