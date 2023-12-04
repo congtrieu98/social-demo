@@ -3,9 +3,12 @@ import { CompleteUser } from "@/lib/db/schema/users";
 import { trpc } from "@/lib/trpc/client";
 import { Button } from "../ui/button";
 import React from "react";
+import { useSession } from "next-auth/react";
+import { useToast } from "../ui/use-toast";
+import { useRouter } from "next/navigation";
 
 export default function UserList({ users }: { users: CompleteUser[] }) {
-
+    const { data: session, status } = useSession()
 
     const { data: u } = trpc.users.getUsers.useQuery(undefined, {
         initialData: { users },
@@ -26,11 +29,47 @@ export default function UserList({ users }: { users: CompleteUser[] }) {
 }
 
 const User = ({ user }: { user: CompleteUser }) => {
+    const session = useSession()
+    const { toast } = useToast();
+    const router = useRouter();
+    const utils = trpc.useContext();
+
+    const onSuccess = async (action: "create" | "update" | "delete" | "success" | "unfollow") => {
+        await utils.users.getUsers.invalidate();
+        router.refresh();
+        toast({
+          title: 'Success',
+          description: `Follow ${action}d!`,
+          variant: "default",
+        });
+      };
+
+    const { mutate: followerUser } =
+    trpc.users.createFollowUser.useMutation({
+      onSuccess: () => onSuccess("success"),
+    });
+
     const handleClickFollow = (e: React.MouseEvent, id: string) => {
         e.preventDefault();
-        console.log(id)
-        // console.log(user?.followers)
-
+        // Id people follow
+        const followerId = session?.data?.user?.id as string
+        // Id people followed
+        const followedId = id
+        // Kiểm tra người đi follow đã follow người đang định follow hay chưa
+        const isFollowed = !!(user?.followers.find(item => item.followedId === followedId && item.followerId === followerId));
+        if (isFollowed) {
+            toast({
+              title: 'Confirmation',
+              description: `You are already following this user. Do you want to unfollow?`,
+              variant: "default",
+              action: <Button >Unfollow</Button>, //onClick={() => unfollowUser({ id: isAlreadyFollowing.id })}
+            });
+          } else {
+            followerUser({
+              followerId: followerId,
+              followedId: followedId,
+            });
+          }
     }
     return (
         <li className="flex justify-between my-2">
@@ -41,7 +80,9 @@ const User = ({ user }: { user: CompleteUser }) => {
                 <div>{user.email}</div>
             </div>
             <div className="w-full">
-                <Button onClick={(e) => handleClickFollow(e, user.id)}>Follow</Button>
+                <Button onClick={(e) => handleClickFollow(e, user.id)}>
+                    { user.followers.length > 0 ? "Following" : "Follow" }
+                </Button>
             </div>
         </li >
     );

@@ -82,6 +82,15 @@ CREATE TABLE "Media" (
     CONSTRAINT "Media_pkey" PRIMARY KEY ("id")
 );
 
+-- CreateTable
+CREATE TABLE "Follow" (
+    "id" TEXT NOT NULL,
+    "followerId" TEXT NOT NULL,
+    "followedId" TEXT NOT NULL,
+
+    CONSTRAINT "Follow_pkey" PRIMARY KEY ("id")
+);
+
 -- CreateIndex
 CREATE UNIQUE INDEX "Account_provider_providerAccountId_key" ON "Account"("provider", "providerAccountId");
 
@@ -111,3 +120,9 @@ ALTER TABLE "Feed" ADD CONSTRAINT "Feed_userId_fkey" FOREIGN KEY ("userId") REFE
 
 -- AddForeignKey
 ALTER TABLE "Media" ADD CONSTRAINT "Media_feedId_fkey" FOREIGN KEY ("feedId") REFERENCES "Feed"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "Follow" ADD CONSTRAINT "Follow_followerId_fkey" FOREIGN KEY ("followerId") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "Follow" ADD CONSTRAINT "Follow_followedId_fkey" FOREIGN KEY ("followedId") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
