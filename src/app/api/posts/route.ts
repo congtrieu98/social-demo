@@ -3,13 +3,13 @@ import { revalidatePath } from "next/cache";
 import { z } from "zod";
 
 import {
-  createPost,
+  // createPost,
   deletePost,
   updatePost,
 } from "@/lib/api/posts/mutations";
 import {
   postIdSchema,
-  insertPostParams,
+  // insertPostParams,
   updatePostParams
 } from "@/lib/db/schema/posts";
 
