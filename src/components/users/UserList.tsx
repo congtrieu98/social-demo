@@ -56,9 +56,8 @@ const User = ({ user }: { user: CompleteUser }) => {
     // Id people followed
     const followedId = id;
     // Kiểm tra người đi follow đã follow người đang định follow hay chưa
-
-    //@ts-ignore
     const isFollowed = user?.followers.find(
+    // @ts-ignore
       (item) => item.followedId === followedId && item.followerId === followerId
     );
     if (!isFollowed) {
@@ -78,7 +77,11 @@ const User = ({ user }: { user: CompleteUser }) => {
       </div>
       <div className="w-full">
         {user.followers.length > 0 ? (
-          <UserAlert id={(user.followers?.find(item => item?.followedId === user?.id))?.id as string} />
+          <UserAlert id={
+            (user.followers?.find(
+                // @ts-ignore
+                item => item?.followedId === user?.id))?.id as string
+            } />
         ) : (<Button onClick={(e) => handleClickFollow(e, user.id)}>
             Follow
           </Button>
