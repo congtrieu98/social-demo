@@ -19,7 +19,7 @@ export default function UserAlert({ id }: { id: string }) {
   const { toast } = useToast();
   const router = useRouter();
   const utils = trpc.useContext();
-
+  
   const onSuccess = async (
     action: "create" | "update" | "delete" | "success" | "unfollow"
   ) => {

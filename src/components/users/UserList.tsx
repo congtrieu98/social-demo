@@ -10,14 +10,17 @@ import { useSession } from "next-auth/react";
 
 export default function UserList({ users }: { users: CompleteUser[] }) {
   const { data: session, status } = useSession()
+  const loading = status === 'loading'
   const { data: user } = trpc.users.getUsers.useQuery(undefined, {
     initialData: { users },
     refetchOnMount: false,
   });
+  
   console.log(user)
-  if (!session) {
+  if (!session && !loading) {
     return redirect('api/auth/signin')
   }
+
   if (user.users.length === 0) {
     return <EmptyState />;
   }
@@ -47,7 +50,7 @@ const User = ({ user }: { user: CompleteUser }) => {
       variant: "default",
     });
   };
-
+  // console.log(" session:", session.data?.user?.id)
   const { mutate: followerUser, isLoading: isFollowing } = trpc.users.createFollowUser.useMutation({
     onSuccess: () => onSuccess("success"),
   });
@@ -85,7 +88,7 @@ const User = ({ user }: { user: CompleteUser }) => {
           user?.followers?.length > 0 ? (
             <UserAlert id={
               // @ts-ignore
-              (user.followers?.find(item => item?.followedId === user?.id && item?.followerId === session.data?.user?.id))?.id as string
+              (user.followers?.find(item => item?.followedId === user?.id))?.id as string
             } />
           ) : 
           (<Button onClick={(e) => handleClickFollow(e, user.id)}>
