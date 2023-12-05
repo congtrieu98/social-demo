@@ -63,7 +63,7 @@ export const createPost = async (post: NewPostParams) => {
                   userFollowed.forEach(async (u: any) => {
                     const { name, email } = u;
                     await resend.emails.send({
-                      from: "Kirimase <onboarding@resend.dev>",
+                      from: "email@email.suzu.vn",
                       to: [email],
                       subject: `Hello ${name}!`,
                       // @ts-ignore

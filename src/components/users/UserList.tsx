@@ -4,17 +4,20 @@ import { trpc } from "@/lib/trpc/client";
 import { Button } from "../ui/button";
 import React from "react";
 import { useToast } from "../ui/use-toast";
-import { useRouter } from "next/navigation";
+import { redirect, useRouter } from "next/navigation";
 import UserAlert from "./UserAlert";
 import { useSession } from "next-auth/react";
 
 export default function UserList({ users }: { users: CompleteUser[] }) {
-
+  const { data: session, status } = useSession()
   const { data: user } = trpc.users.getUsers.useQuery(undefined, {
     initialData: { users },
     refetchOnMount: false,
   });
-
+  console.log(user)
+  if (!session) {
+    return redirect('api/auth/signin')
+  }
   if (user.users.length === 0) {
     return <EmptyState />;
   }
@@ -79,7 +82,7 @@ const User = ({ user }: { user: CompleteUser }) => {
       <div className="w-full">
         {
           // @ts-ignore
-          user.followers.length > 0 ? (
+          user?.followers?.length > 0 ? (
             <UserAlert id={
               // @ts-ignore
               (user.followers?.find(item => item?.followedId === user?.id && item?.followerId === session.data?.user?.id))?.id as string
