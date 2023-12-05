@@ -18,11 +18,12 @@ export const EmailPost: React.FC<Readonly<EmailPost>> = ({
 }) => {
   return (
     <div>
-      <h1>Welcome, {name}!</h1>
       <p>
         {name} vừa đăng bài post mới!
       </p>
       {/* <img src={p.image || ''} alt={p.title} /> */}
+      <div>{p.title}</div>
+      <div>{p.content}</div>
       <hr />
       <p>Sent with help from Resend and Kirimase 😊</p>
     </div>

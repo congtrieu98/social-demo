@@ -6,6 +6,7 @@ import React from "react";
 import { useToast } from "../ui/use-toast";
 import { useRouter } from "next/navigation";
 import UserAlert from "./UserAlert";
+import { useSession } from "next-auth/react";
 
 export default function UserList({ users }: { users: CompleteUser[] }) {
 
@@ -28,6 +29,7 @@ export default function UserList({ users }: { users: CompleteUser[] }) {
 }
 
 const User = ({ user }: { user: CompleteUser }) => {
+  const session = useSession()
   const { toast } = useToast();
   const router = useRouter();
   const utils = trpc.useContext();
@@ -50,17 +52,19 @@ const User = ({ user }: { user: CompleteUser }) => {
   const handleClickFollow = (e: React.MouseEvent, id: string) => {
     e.preventDefault();
     // Id people follow
-    const followerId = user?.id as string;
+    const followerId = session.data?.user?.id as string;
     // Id people followed
     const followedId = id;
     // Kiểm tra người đi follow đã follow người đang định follow hay chưa
 
     // @ts-ignore
     const isFollowed = user?.followers.find((item) => item.followedId === followedId && item.followerId === followerId);
-    if (!isFollowed) {
+    if (isFollowed && typeof isFollowed !== 'undefined') {
+      console.log('Đã follow')
+    } else {
       followerUser({
-        followerId: followerId,
-        followedId: followedId,
+        followerId: followerId, // Người follow mình
+        followedId: followedId, // Người mình đã follow
       });
     }
   };
@@ -78,9 +82,10 @@ const User = ({ user }: { user: CompleteUser }) => {
           user.followers.length > 0 ? (
             <UserAlert id={
               // @ts-ignore
-              (user.followers?.find(item => item?.followedId === user?.id))?.id as string
+              (user.followers?.find(item => item?.followedId === user?.id && item?.followerId === session.data?.user?.id))?.id as string
             } />
-          ) : (<Button onClick={(e) => handleClickFollow(e, user.id)}>
+          ) : 
+          (<Button onClick={(e) => handleClickFollow(e, user.id)}>
             Follo{isFollowing ? 'wing...' : 'w'}
           </Button>
           )}

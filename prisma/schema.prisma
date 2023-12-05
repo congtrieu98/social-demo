@@ -64,8 +64,8 @@ model User {
   sessions      Session[]
   posts         Post[]
   feeds         Feed[]
-  follows       Follow[]  @relation("Follows")
-  followers     Follow[]  @relation("FollowedBy")
+  follows       Follow[]  @relation("Follows") // Lưu thông tin mình đang follow ai => 
+  followers     Follow[]  @relation("FollowedBy") // Lưu thông tin ai đang follow mình => dùng field này để lấy thông tin gửi mail
 }
 
 model VerificationToken {
