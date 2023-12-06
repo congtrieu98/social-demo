@@ -1,8 +1,10 @@
 import MediaList from "@/components/medias/MediaList";
 import NewMediaModal from "@/components/medias/MediaModal";
 import { getMedias } from "@/lib/api/medias/queries";
+import { checkAuth } from "@/lib/auth/utils";
 
 export default async function Medias() {
+  await checkAuth();
   const { medias } = await getMedias();  
 
   return (

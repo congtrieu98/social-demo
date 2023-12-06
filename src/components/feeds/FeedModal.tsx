@@ -49,7 +49,7 @@ export default function FeedModal({
           variant={editing ? "ghost" : "outline"}
           size={editing ? "sm" : "icon"}
         >
-          {editing ? "Edit" : "+"}
+          {editing ? "..." : "+"}
         </Button> )}
       </DialogTrigger>
       <DialogContent>

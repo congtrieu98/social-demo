@@ -3,10 +3,8 @@
 import { CompleteFeed } from "@/lib/db/schema/feeds";
 import { trpc } from "@/lib/trpc/client";
 import FeedModal from "./FeedModal";
-import { Carousel } from 'react-responsive-carousel';
-import "react-responsive-carousel/lib/styles/carousel.min.css";
 import { Key } from "react";
-
+import FeedImagesModal from "./FeedImagesModal";
 
 export default function FeedList({ feeds }: { feeds: CompleteFeed[] }) {
   const { data: f } = trpc.feeds.getFeeds.useQuery(undefined, {
@@ -20,8 +18,11 @@ export default function FeedList({ feeds }: { feeds: CompleteFeed[] }) {
 
   return (
     <ul>
-      {f.feeds.map((feed: CompleteFeed) => (
+      {f.feeds.map((feed: CompleteFeed, index) => (
+        <>
         <Feed feed={feed} key={feed.id} />
+        {index < f.feeds.length - 1 && <div className="h-[1px] bg-gray-200 w-full"></div>}
+        </>
       ))}
     </ul>
   );
@@ -29,23 +30,17 @@ export default function FeedList({ feeds }: { feeds: CompleteFeed[] }) {
 
 const Feed = ({ feed }: { feed: CompleteFeed }) => {
   return (
-    <li className="flex-col justify-between my-2">
-      {feed.medias.length > 0 && (
-        <Carousel showThumbs={false}>
-          {feed.medias.map((media: { id: Key | null | undefined; url: string; }) => (
-            <div className="flex flex-col justify-center items-center w-full space-y-3" key={feed.id}>
-              <div className="mt-2 text-center">{feed.content}</div>
-              <img
-                src={media.url}
-                alt={media.url}
-                className="h-[100px] w-[100px] object-contain rounded-md"
-              />
-            </div>
-          ))}
-        </Carousel>
-      )}
-      <FeedModal feed={feed} />
-    </li>
+    <>
+      <li className="relative flex-col justify-between my-2">
+        <div className="mt-2 text-center mb-2">{feed.content}</div>
+        <div className="flex justify-center items-center w-full">
+            {<FeedImagesModal medias={feed.medias} />}
+          </div>
+        <div className="absolute -top-2 right-20">
+          <FeedModal feed={feed} />
+        </div>
+      </li>
+    </>
   );
 };
 
@@ -62,4 +57,3 @@ const EmptyState = () => {
     </div>
   );
 };
-

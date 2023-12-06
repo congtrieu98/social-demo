@@ -97,7 +97,7 @@ const FeeForm = ({
     if (acceptedFiles?.length) {
       setFiles(previousFiles => [
         ...previousFiles,
-        ...acceptedFiles.map(file => ({ ...file, loading: true }))
+        ...acceptedFiles.map(file => ({ ...file, loading: true, erorrs: [] }))
       ]);
 
       acceptedFiles.forEach((file, index) => {
@@ -205,7 +205,7 @@ const FeeForm = ({
                   <XMarkIcon className="w-5 h-5 fill-white hover:fill-secondary-400 transition-colors" />
                 </button>
                 <div className=" text-neutral-500 text-[12px] font-medium">
-                  {file.name}
+                  {file.path}
                 </div>
               </li>
             ))}
