@@ -49,8 +49,9 @@ export default function FeedImagesModal({ medias }: { medias?: Media[] }) {
             // @ts-ignore
           medias.length > 1 ? (
             <Carousel showThumbs={false}>
-              {medias?.map((item) => (
+              {medias?.map((item, index) => (
                 <Image
+                  key={index}
                   src={item.url}
                   alt={item.url}
                   width={100}
