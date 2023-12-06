@@ -6,6 +6,7 @@ import { Dialog, DialogContent, DialogTrigger } from "../ui/dialog";
 import { Media } from "@/lib/db/schema/medias";
 import { Carousel } from "react-responsive-carousel";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
+import Image from "next/image";
 
 export default function FeedImagesModal({ medias }: { medias?: Media[] }) {
   const [open, setOpen] = useState(false);
@@ -16,11 +17,13 @@ export default function FeedImagesModal({ medias }: { medias?: Media[] }) {
         <div className="cursor-pointer">
           {
             <div className="flex space-x-4">
-              <img
+              <Image
                 // @ts-ignore
                 src={medias[0].url}
                 // @ts-ignore
                 alt={medias[0].url}
+                width={100}
+                height={100}
                 className="h-[100px] w-[100px] object-contain rounded-md"
               />
               {
@@ -47,19 +50,23 @@ export default function FeedImagesModal({ medias }: { medias?: Media[] }) {
           medias.length > 1 ? (
             <Carousel showThumbs={false}>
               {medias?.map((item) => (
-                <img
+                <Image
                   src={item.url}
                   alt={item.url}
+                  width={100}
+                  height={100}
                   className="h-full w-full object-contain rounded-md"
                 />
               ))}
             </Carousel>
           ) : (
-            <img
+            <Image
               // @ts-ignore
               src={medias[0].url}
               // @ts-ignore
               alt={medias[0].url}
+              width={100}
+              height={100}
               className="h-full w-full object-contain rounded-md"
             />
           )}
