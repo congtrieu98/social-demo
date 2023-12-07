@@ -24,6 +24,7 @@ import { useDropzone } from "react-dropzone";
 import { useCallback, useEffect, useState } from "react";
 import { uploadVercel } from "@/lib/utils";
 import { ArrowUpTrayIcon, XMarkIcon } from "@heroicons/react/24/solid";
+import FeedAlert from "./FeedAlert";
 
 interface FileWithPreview extends File {
   preview?: string;
@@ -55,7 +56,8 @@ const FeeForm = ({
       content: "",
     },
   });
-
+  // console.log(feed)
+  // console.log(files)
   const onSuccess = async (action: "create" | "update" | "delete") => {
     await utils.feeds.getFeeds.invalidate();
     router.refresh();
@@ -85,7 +87,16 @@ const FeeForm = ({
 
   const { mutate: updateFee, isLoading: isUpdating } =
     trpc.feeds.updateFeed.useMutation({
-      onSuccess: () => onSuccess("update"),
+      onSuccess: ({ feed }) => {
+          if (files?.length > 0 && feed?.id) {
+            files.forEach((file: FileWithPreview) => {
+              if (file.preview) {
+                const feedId = feed.id;
+                mutation.mutate({ feedId: feedId, url: file.preview });
+              }
+            })
+          }
+        onSuccess("update")} 
     });
 
   const { mutate: deleteFee, isLoading: isDeleting } =
@@ -138,9 +149,9 @@ const FeeForm = ({
   }, [files]);
 
   const removeFile = (path: string) => {
-    // @ts-ignore
-    setFiles((files) => files.filter((file) => file.path !== path));
+    setFiles((files) => files.filter((file: FileWithPreview) => file.path !== path));
   };
+
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(handleSubmit)} className={"space-y-8"}>
@@ -176,6 +187,31 @@ const FeeForm = ({
             Accepted Files
           </h3>
           <ul className="mt-6 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-10">
+            {
+            // @ts-ignore
+            feed?.medias?.length > 0 &&
+            // @ts-ignore
+            feed?.medias.map((item, index) => 
+            <li
+              key={index}
+              className="relative h-[100px] rounded-md shadow-lg"
+            >
+              {item.loading ? (
+                <svg className="absolute top-10 right-6 animate-spin -ml-1 mr-3 h-5 w-5 text-black" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                  <circle className="opacity-25" cx="12" cy="12" r="10" stroke="black" strokeWidth="4"></circle>
+                  <path className="opacity-75" fill="black" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                </svg>
+              ) : (
+                <img
+                  src={item.url}
+                  alt={item.url}
+                  className="h-[100px] w-[100px] object-contain rounded-md"
+                />
+              )}
+              <FeedAlert id={item?.id} feed={feed} />
+            </li>)
+            
+            }
             {files.map((file: FileWithPreview, index) => (
               <li
                 key={index}
@@ -205,7 +241,7 @@ const FeeForm = ({
                   <XMarkIcon className="w-5 h-5 fill-white hover:fill-secondary-400 transition-colors" />
                 </button>
                 <div className=" text-neutral-500 text-[12px] font-medium">
-                  {file.path}
+                  {/* {file.path} */}
                 </div>
               </li>
             ))}

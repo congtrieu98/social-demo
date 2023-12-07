@@ -44,7 +44,8 @@ const User = ({ user }: { user: CompleteUser }) => {
       variant: "default",
     });
   };
-  // console.log(" session:", session.data?.user?.id)
+  // console.log(" session:", session.data?.user)
+  // console.log(" user:", user)
   const { mutate: followerUser, isLoading: isFollowing } = trpc.users.createFollowUser.useMutation({
     onSuccess: () => onSuccess("success"),
   });

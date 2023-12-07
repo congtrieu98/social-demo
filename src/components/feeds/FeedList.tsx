@@ -3,7 +3,6 @@
 import { CompleteFeed } from "@/lib/db/schema/feeds";
 import { trpc } from "@/lib/trpc/client";
 import FeedModal from "./FeedModal";
-import { Key } from "react";
 import FeedImagesModal from "./FeedImagesModal";
 
 export default function FeedList({ feeds }: { feeds: CompleteFeed[] }) {
