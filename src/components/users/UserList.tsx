@@ -2,7 +2,7 @@
 import { CompleteUser } from "@/lib/db/schema/users";
 import { trpc } from "@/lib/trpc/client";
 import { Button } from "../ui/button";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useToast } from "../ui/use-toast";
 import { useRouter } from "next/navigation";
 import UserAlert from "./UserAlert";
@@ -33,6 +33,8 @@ const User = ({ user }: { user: CompleteUser }) => {
   const { toast } = useToast();
   const router = useRouter();
   const utils = trpc.useContext();
+  const [following, setFollowing] = useState(false)
+
   const onSuccess = async (
     action: "success" | "unfollow"
   ) => {
@@ -43,18 +45,29 @@ const User = ({ user }: { user: CompleteUser }) => {
       description: `Follow ${action}fully!`,
       variant: "default",
     });
+    if (action === 'success') {
+      setFollowing(true);
+    }
   };
-  // console.log(" session:", session.data?.user)
-  // console.log(" user:", user)
-  const { mutate: followerUser, isLoading: isFollowing } = trpc.users.createFollowUser.useMutation({
+
+  const { mutate: followerUser } = trpc.users.createFollowUser.useMutation({
     onSuccess: () => onSuccess("success"),
   });
 
-  const handleClickFollow = (e: React.MouseEvent, id: string) => {
+  const {  data: isFollowing, error, status, refetch } = trpc.users.getUserFollowes.useQuery({followedId: user?.id})
+
+  useEffect(() => {
+    if (isFollowing) {
+      setFollowing(isFollowing?.checkFollow)
+    }
+
+  }, [isFollowing])
+
+  const handleClickFollow = async (e: React.MouseEvent, id: string) => {
     e.preventDefault();
-    // Id people follow
+    // Id của mình
     const followerId = session.data?.user?.id as string;
-    // Id people followed
+    // Id của người mình follow()
     const followedId = id;
 
     // @ts-ignore
@@ -62,11 +75,12 @@ const User = ({ user }: { user: CompleteUser }) => {
     if (isFollowed && typeof isFollowed !== 'undefined') {
       console.log('Đã follow')
     } else {
-      followerUser({
+      await followerUser({
         followerId: followerId, // Người follow mình
         followedId: followedId, // Người mình đã follow
       });
     }
+    refetch()
   };
   return (
     <li className="flex justify-between my-2">
@@ -79,14 +93,17 @@ const User = ({ user }: { user: CompleteUser }) => {
       <div className="w-full">
         {
           // @ts-ignore
-          user?.followers?.length > 0 ? (
+          following ? (
             <UserAlert id={
               // @ts-ignore
               (user.followers?.find(item => item?.followedId === user?.id))?.id as string
-            } />
+            }
+            following={following}
+            setFollowing={setFollowing}
+            />
           ) : 
           (<Button onClick={(e) => handleClickFollow(e, user.id)}>
-            Follo{isFollowing ? 'wing...' : 'w'}
+            {status === 'loading' ? 'Loading...' : 'Follow'}
           </Button>
           )}
       </div>

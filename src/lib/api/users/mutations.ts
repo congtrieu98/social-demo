@@ -43,5 +43,4 @@ export const unFollowUser = async (id: FollowId ) => {
     console.error(message);
     return { error: message };
   }
-  
 }

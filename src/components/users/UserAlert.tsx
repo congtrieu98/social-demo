@@ -15,29 +15,33 @@ import { useToast } from "../ui/use-toast";
 import { useRouter } from "next/navigation";
 import { trpc } from "@/lib/trpc/client";
 
-export default function UserAlert({ id }: { id: string }) {
+export default function UserAlert({ id, following, setFollowing }: { id: string, following: Boolean, setFollowing: any }) {
   const { toast } = useToast();
   const router = useRouter();
   const utils = trpc.useContext();
-  
+
   const onSuccess = async (
-    action: "create" | "update" | "delete" | "success" | "unfollow"
+    action: "unfollow"
   ) => {
     await utils.users.getUsers.invalidate();
     router.refresh();
     toast({
       title: "Success",
-      description: `unFollow ${action}fully!`,
+      description: `Unfollow successfully!`,
       variant: "default",
     });
+    if (action === 'unfollow') {
+      setFollowing(false)
+    }
   };
-  const { mutate: unfollowUser, isLoading: isUnfollowing } = trpc.users.unFollowUser.useMutation({
-    onSuccess: () => onSuccess("success"),
+  const { mutate: unfollowUser,  } = trpc.users.unFollowUser.useMutation({
+    onSuccess: () => onSuccess("unfollow"),
   });
+  
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>
-        <Button>Unfollo{isUnfollowing ? 'wing...' : 'w' }</Button>
+        <Button>Unfollo{following ? 'w' : '' }</Button>
       </AlertDialogTrigger>
       <AlertDialogContent>
         <AlertDialogHeader>

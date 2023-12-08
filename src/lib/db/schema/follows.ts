@@ -15,6 +15,7 @@ export const updateFollowSchema = followSchema;
 export const updateFollowParams = updateFollowSchema.extend({})
 
 export const followIdSchema = updateFollowSchema.pick({ id: true });
+export const followedIdSchema = updateFollowSchema.pick({ followedId: true });
 
 // Types for follows - used to type API request params and within Components
 export type Follow = z.infer<typeof updateFollowSchema>;
@@ -22,6 +23,7 @@ export type NewFollow = z.infer<typeof insertFollowSchema>;
 export type NewFollowParams = z.infer<typeof insertFollowParams>;
 export type UpdateFollowParams = z.infer<typeof updateFollowParams>;
 export type FollowId = z.infer<typeof followIdSchema>["id"];
+export type FollowedId = z.infer<typeof followedIdSchema>["followedId"];
     
 // this type infers the return from getFollows() - meaning it will include any joins
 export type CompleteFollow = Awaited<ReturnType<typeof getFollows>>["follows"][number];

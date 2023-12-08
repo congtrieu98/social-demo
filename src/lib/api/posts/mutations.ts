@@ -55,7 +55,7 @@ export const createPost = async (post: NewPostParams) => {
             const post = await db.post.create({ data: newPost });
             if (post) {
               // Get user hiện tại
-              const user = await db.user.findFirst({ where: { id: session?.user.id }, include: { followers: true, follows: true } });
+              const user = await db.user.findFirst({ where: { id: session?.user.id }, include: { followers: true } });
               if (user) {
               user?.followers.forEach(async item => {
                 const userFollowed = await db.user.findMany({ where: { id: item.followerId } });
@@ -63,7 +63,7 @@ export const createPost = async (post: NewPostParams) => {
                   userFollowed.forEach(async (u: any) => {
                     const { name, email } = u;
                     await resend.emails.send({
-                      from: "email@email.suzu.vn",
+                      from: `SZG <${process.env.RESEND_EMAIL}>`,
                       to: [email],
                       subject: `Hello ${name}!`,
                       // @ts-ignore

@@ -1,6 +1,6 @@
 import { createFollowUser, unFollowUser } from "@/lib/api/users/mutations";
-import { getUsers } from "@/lib/api/users/queries"
-import { followIdSchema, insertFollowSchema } from "@/lib/db/schema/follows";
+import { getUsers, getUserFollowes } from "@/lib/api/users/queries"
+import { followIdSchema, followedIdSchema, insertFollowSchema } from "@/lib/db/schema/follows";
 import { publicProcedure, router } from "@/lib/server/trpc";
 
 export const usersRouter = router({
@@ -16,5 +16,10 @@ export const usersRouter = router({
     .input(followIdSchema)
     .mutation(async ({ input }) => {
         return unFollowUser(input.id)
-    })
+    }),
+    getUserFollowes: publicProcedure
+    .input(followedIdSchema)
+    .query(async ({input}) => {
+    return getUserFollowes(input.followedId);
+  }),
 });
