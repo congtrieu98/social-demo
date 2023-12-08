@@ -5,7 +5,7 @@ import { type PostId, postIdSchema } from "@/lib/db/schema/posts";
 export const getPosts = async () => {
   const { session } = await getUserAuth();
   // @ts-ignore
-  const p = await db.post.findMany({ where: { userId: session?.user.id! } });
+  const p = await db.post.findMany();
   return { posts: p };
 };
 
@@ -18,4 +18,12 @@ export const getPostById = async (id: PostId) => {
   });
   return { posts: p };
 };
+
+export const getPostLiked = async (postId: PostId) => {
+  const { session } = await getUserAuth();
+  const posts = await db.like.findMany({
+    where: { id: postId, userId: session?.user?.id }
+  });
+  console.log(posts)
+}
 

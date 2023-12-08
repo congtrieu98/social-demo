@@ -1,0 +1,23 @@
+import * as z from "zod"
+import { CompleteUser, relatedUserSchema, CompletePost, relatedPostSchema } from "./index"
+
+export const likeSchema = z.object({
+  id: z.string(),
+  userId: z.string(),
+  postId: z.string(),
+})
+
+export interface CompleteLike extends z.infer<typeof likeSchema> {
+  user: CompleteUser
+  feed: CompletePost
+}
+
+/**
+ * relatedLikeSchema contains all relations on your model in addition to the scalars
+ *
+ * NOTE: Lazy required in case of potential circular dependencies within schema
+ */
+export const relatedLikeSchema: z.ZodSchema<CompleteLike> = z.lazy(() => likeSchema.extend({
+  user: relatedUserSchema,
+  feed: relatedPostSchema,
+}))

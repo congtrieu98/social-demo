@@ -8,9 +8,18 @@ export const getUsers = async () => {
   const u = await db.user.findMany({
     where: { id: { not: session?.user.id } },
     // @ts-ignore
-    include: { followers: true },
+    include: { followers: true, likes: true },
   });
   return { users: u };
+};
+
+export const getUserById = async () => {
+  const { session } = await getUserAuth();
+  //@ts-ignore
+  return await db.user.findFirst({
+    where: { id:  session?.user.id },
+    include: { likes: true },
+  });
 };
 
 export const getUserFollowes = async (followedId: FollowedId) => {
