@@ -13,7 +13,6 @@ export default function UserList({ users }: { users: CompleteUser[] }) {
     initialData: { users },
     refetchOnMount: false,
   });
-  
 
   if (user.users.length === 0) {
     return <EmptyState />;
@@ -29,7 +28,7 @@ export default function UserList({ users }: { users: CompleteUser[] }) {
 }
 
 const User = ({ user }: { user: CompleteUser }) => {
-  const session = useSession()
+  const session = useSession();
   const { toast } = useToast();
   const router = useRouter();
   const utils = trpc.useContext();
@@ -54,7 +53,7 @@ const User = ({ user }: { user: CompleteUser }) => {
     onSuccess: () => onSuccess("success"),
   });
 
-  const {  data: isFollowing, error, status, refetch } = trpc.users.getUserFollowes.useQuery({followedId: user?.id})
+  const { data: isFollowing, error, status, refetch } = trpc.users.getUserFollowes.useQuery({ followedId: user?.id })
 
   useEffect(() => {
     if (isFollowing) {
@@ -92,20 +91,18 @@ const User = ({ user }: { user: CompleteUser }) => {
       </div>
       <div className="w-full">
         {
-          // @ts-ignore
           following ? (
             <UserAlert id={
-              // @ts-ignore
               (user.followers?.find(item => item?.followedId === user?.id))?.id as string
             }
-            following={following}
-            setFollowing={setFollowing}
+              following={following}
+              setFollowing={setFollowing}
             />
-          ) : 
-          (<Button onClick={(e) => handleClickFollow(e, user.id)}>
-            {status === 'loading' ? 'Loading...' : 'Follow'}
-          </Button>
-          )}
+          ) :
+            (<Button onClick={(e) => handleClickFollow(e, user.id)}>
+              {status === 'loading' ? 'Loading...' : 'Follow'}
+            </Button>
+            )}
       </div>
     </li>
   );

@@ -9,7 +9,7 @@ export const likeSchema = z.object({
 
 export interface CompleteLike extends z.infer<typeof likeSchema> {
   user: CompleteUser
-  feed: CompletePost
+  post: CompletePost
 }
 
 /**
@@ -19,5 +19,5 @@ export interface CompleteLike extends z.infer<typeof likeSchema> {
  */
 export const relatedLikeSchema: z.ZodSchema<CompleteLike> = z.lazy(() => likeSchema.extend({
   user: relatedUserSchema,
-  feed: relatedPostSchema,
+  post: relatedPostSchema,
 }))

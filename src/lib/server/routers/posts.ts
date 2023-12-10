@@ -1,4 +1,4 @@
-import { getPostById, getPosts } from "@/lib/api/posts/queries";
+import { getPostById, getPostLiked, getPosts } from "@/lib/api/posts/queries";
 import { publicProcedure, router } from "@/lib/server/trpc";
 import {
   postIdSchema,
@@ -13,6 +13,9 @@ export const postsRouter = router({
   }),
   getPostById: publicProcedure.input(postIdSchema).query(async ({ input }) => {
     return getPostById(input.id);
+  }),
+  getPostLiked: publicProcedure.input(postIdSchema).query(async ({ input }) => {
+    return getPostLiked(input.id);
   }),
   createPost: publicProcedure
     .input(insertPostParams)

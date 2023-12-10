@@ -3,9 +3,10 @@ import { getUserAuth } from "@/lib/auth/utils";
 import { type PostId, postIdSchema } from "@/lib/db/schema/posts";
 
 export const getPosts = async () => {
-  const { session } = await getUserAuth();
   // @ts-ignore
-  const p = await db.post.findMany();
+  const p = await db.post.findMany({
+    include: { likes: true },
+  });
   return { posts: p };
 };
 
@@ -21,9 +22,13 @@ export const getPostById = async (id: PostId) => {
 
 export const getPostLiked = async (postId: PostId) => {
   const { session } = await getUserAuth();
-  const posts = await db.like.findMany({
-    where: { id: postId, userId: session?.user?.id }
+  //@ts-ignore
+  const getLikePostById = await db.like.findMany({
+    where: { postId: postId, userId: session?.user?.id }
   });
-  console.log(posts)
+  if (getLikePostById.length > 0) {
+    return { checkPostLiked: true }
+  }
+  return { checkPostLiked: false }
 }
 

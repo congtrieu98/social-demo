@@ -17,7 +17,8 @@ export const getUserById = async () => {
   const { session } = await getUserAuth();
   //@ts-ignore
   return await db.user.findFirst({
-    where: { id:  session?.user.id },
+    where: { id: session?.user.id },
+    // @ts-ignore
     include: { likes: true },
   });
 };
@@ -26,12 +27,12 @@ export const getUserFollowes = async (followedId: FollowedId) => {
   const { session } = await getUserAuth();
   //@ts-ignore
   const users = await db.follow.findMany({
-    where: { followerId: session?.user?.id, followedId: followedId } 
+    where: { followerId: session?.user?.id, followedId: followedId }
   });
-  
+
   if (users?.length > 0) {
-    return {checkFollow : true}
+    return { checkFollow: true }
   }
 
-  return { checkFollow: false}
+  return { checkFollow: false }
 }
