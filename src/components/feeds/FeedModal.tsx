@@ -10,13 +10,13 @@ import {
   DialogTrigger,
 } from "../ui/dialog";
 import FeedForm from "./FeedForm";
-import { Feed } from "@/lib/db/schema/feeds";
+import { CompleteFeed } from "@/lib/db/schema/feeds";
 
-export default function FeedModal({ 
+export default function FeedModal({
   feed,
   emptyState,
-}: { 
-  feed?: Feed;
+}: {
+  feed?: CompleteFeed;
   emptyState?: boolean;
 }) {
   const [open, setOpen] = useState(false);
@@ -25,7 +25,7 @@ export default function FeedModal({
   return (
     <Dialog onOpenChange={setOpen} open={open}>
       <DialogTrigger asChild>
-      { emptyState ? (
+        {emptyState ? (
           <Button>
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -45,16 +45,16 @@ export default function FeedModal({
             New Feed
           </Button>
         ) : (
-        <Button
-          variant={editing ? "ghost" : "outline"}
-          size={editing ? "sm" : "icon"}
-        >
-          {editing ? "..." : "+"}
-        </Button> )}
+          <Button
+            variant={editing ? "ghost" : "outline"}
+            size={editing ? "sm" : "icon"}
+          >
+            {editing ? "..." : "+"}
+          </Button>)}
       </DialogTrigger>
       <DialogContent>
         <DialogHeader className="px-5 pt-5">
-          <DialogTitle>{ editing ? "Edit" : "Create" } Feed</DialogTitle>
+          <DialogTitle>{editing ? "Edit" : "Create"} Feed</DialogTitle>
         </DialogHeader>
         <div className="px-5 pb-5">
           <FeedForm closeModal={closeModal} feed={feed} />
