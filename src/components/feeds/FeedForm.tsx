@@ -21,7 +21,7 @@ import { z } from "zod";
 import { useRouter } from "next/navigation";
 import { useToast } from "@/components/ui/use-toast";
 import { useDropzone } from "react-dropzone";
-import { useCallback, useEffect, useState } from "react";
+import { Key, useCallback, useEffect, useState } from "react";
 import { uploadVercel } from "@/lib/utils";
 import { ArrowUpTrayIcon, XMarkIcon } from "@heroicons/react/24/solid";
 import FeedAlert from "./FeedAlert";
@@ -190,8 +190,8 @@ const FeeForm = ({
           <ul className="mt-6 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-10">
             {
               // @ts-ignore
-              feed.medias.length > 0 &&
-              feed?.medias.map((item: any, index) =>
+              feed?.medias.length > 0 &&
+              feed?.medias.map((item: any, index: Key | null | undefined) =>
                 <li
                   key={index}
                   className="relative h-[100px] rounded-md shadow-lg"
