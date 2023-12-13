@@ -1,9 +1,9 @@
 'use client';
 import React, { PropsWithChildren, useState } from 'react';
 import { Fragment } from "react";
-import {Transition, Dialog} from '@headlessui/react'
+import { Transition, Dialog } from '@headlessui/react'
 import Link from 'next/link';
-import LoginForm from '@/components/auth/login/LoginForm';
+import LoginForm from '@/components/auth/forgotPass/ForgotPass';
 // interface IModalProps {
 //   isOpen: boolean
 //   onClose: () => void
