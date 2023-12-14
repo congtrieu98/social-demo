@@ -12,6 +12,7 @@ export default async function Home() {
         </pre>
       ) : null}
       <SignIn />
+      <h1>Home page</h1>
     </main>
   );
 }

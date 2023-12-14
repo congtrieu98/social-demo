@@ -14,6 +14,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
+import { TypeFormModal } from "@/lib/constant/TypeFormModal";
 
 const formSchema = z.object({
     email: z.string().email({
@@ -24,7 +25,7 @@ const formSchema = z.object({
     }),
 });
 
-export default function LoginForm({ setForgotPassword }: any) {
+export default function LoginForm({ setTypeFormModal }: any) {
     const [email, setEmail] = useState<string>();
     const [password, setPassword] = useState<string>();
 
@@ -70,11 +71,10 @@ export default function LoginForm({ setForgotPassword }: any) {
                     )}
                 />
 
-                <div
-                    className="flex p-2 mb-2.5 flex-col items-start gap-1"
-                    onClick={() => setForgotPassword(true)}
-                >
-                    <div className="text-slate-900 text-[15px] font-semibold leading-6 cursor-pointer">
+                <div className="flex p-2 mb-2.5 flex-col items-start gap-1">
+                    <div
+                        onClick={() => setTypeFormModal(TypeFormModal.forgotPassword)}
+                        className="text-slate-900 text-[15px] font-semibold leading-6 cursor-pointer">
                         Quên mật khẩu
                     </div>
                 </div>

@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-async-client-component */
 "use client";
 import { CompletePost } from "@/lib/db/schema/posts";
 import { trpc } from "@/lib/trpc/client";
@@ -13,17 +14,28 @@ import {
   DialogTrigger,
 } from "../ui/dialogAuth";
 import { LoginFormModal } from "../general/form/LoginFormModal";
+import { TypeFormModal } from "@/lib/constant/TypeFormModal";
+import { SignupFormModal } from "../general/form/SignupFormMoadal";
+import { ForgotForm } from "../general/form/ForgotForm";
+import { useSession } from "next-auth/react";
 
-export default function PostList({ posts }: { posts: CompletePost[] }) {
+export default async function PostList({ posts }: { posts: CompletePost[] }) {
   const { data: p } = trpc.posts.getPosts.useQuery(undefined, {
     initialData: { posts },
     refetchOnMount: false,
   });
 
   const [open, setOpen] = useState(false);
+  const [typeFormModal, setTypeFormModal] = useState<TypeFormModal>(0);
 
   if (p.posts.length === 0) {
     return <EmptyState />;
+  }
+
+  const handleChangeModal = () => {
+    setOpen(!open)
+    console.log("hahahahahahaah")
+    setTypeFormModal(0)
   }
 
   return (
@@ -34,22 +46,31 @@ export default function PostList({ posts }: { posts: CompletePost[] }) {
         ))}
       </ul>
 
-      <Dialog onOpenChange={setOpen} open={open}>
-      <DialogTrigger asChild>
+      <Dialog onOpenChange={handleChangeModal} open={open}>
+        <DialogTrigger asChild>
           <Button>
             Login
           </Button>
-      </DialogTrigger>
-      <DialogContent>
-        <div className="">
-          <LoginFormModal  />
-        </div>
-      </DialogContent>
-    </Dialog>
+        </DialogTrigger>
+        <DialogContent>
+          <div className="">
+            {
+              typeFormModal == 0 ?
+                <LoginFormModal setTypeFormModal={setTypeFormModal} /> :
+                typeFormModal == 1 ?
+                  <SignupFormModal setTypeFormModal={setTypeFormModal} /> :
+                  typeFormModal === 2 ?
+                    <ForgotForm setTypeFormModal={setTypeFormModal} /> :
+                    ''
+            }
+          </div>
+        </DialogContent>
+      </Dialog>
     </>
   );
 }
 const Post = ({ post }: { post: CompletePost }) => {
+  const session = useSession();
   const { toast } = useToast();
   const router = useRouter();
   const utils = trpc.useContext();
@@ -93,21 +114,27 @@ const Post = ({ post }: { post: CompletePost }) => {
   }, [isPostLiked, post]);
 
   const handleLikePost = (id: string) => {
-    const isLike = user?.likes.find(
-      (item) => item?.userId === user?.id && item?.postId === id
-    );
-    if (isLike !== undefined) {
-      const likeId = isLike?.id;
-      diskLikePost({
-        id: likeId,
-      });
-      refetch();
+    if (session?.data == null && session?.status == 'unauthenticated') {
+      console.log("vo day")
+      router.push('/auth/signIn')
     } else {
-      likePost({
-        postId: id,
-      });
-      refetch();
+      const isLike = user?.likes.find(
+        (item) => item?.userId === user?.id && item?.postId === id
+      );
+      if (isLike !== undefined) {
+        const likeId = isLike?.id;
+        diskLikePost({
+          id: likeId,
+        });
+        refetch();
+      } else {
+        likePost({
+          postId: id,
+        });
+        refetch();
+      }
     }
+
   };
   return (
     <li className="flex justify-between my-2">

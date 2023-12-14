@@ -17,16 +17,12 @@ import { Button } from "@/components/ui/button";
 
 const formSchema = z.object({
   email: z.string().email({
-    message: "Hãy nhập địa chỉ email chính xác dinh dạng admin@example.com",
-  }),
-  password: z.string().min(5, {
-    message: "Password must be at least 5 characters.",
-  }),
+    message: "Hãy nhập địa chỉ email chính xác đinh dạng admin@example.com",
+  })
 });
 
 export default function ForgotPass() {
   const [email, setEmail] = useState<string>();
-  // const [forgotPassword, setForgotPassword] = useState<Boolean>(false);
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -55,8 +51,6 @@ export default function ForgotPass() {
             )}
           />
         </div>
-
-
 
         <Button
           className={`flex p-2 flex-col items-start gap-1 self-stretch rounded-full border border-slate-100 w-full ${email ? "bg-slate-900" : "bg-slate-50"

@@ -19,58 +19,59 @@ export default async function Navbar() {
     session?.user.name.length > 5;
 
 
-  if (session?.user) {
-    return (
-      <nav className="py-2 flex items-center justify-between transition-all duration-300">
-        <h1 className="font-semibold space-x-4 transition-hover cursor-pointer">
-          <Link href="/" className="hover:opacity-75">Logo</Link>
-          <Link href="/posts" className="hover:opacity-75">Posts</Link>
-          <Link href="/feeds" className="hover:opacity-75">Feeds</Link>
-          <Link href="/medias" className="hover:opacity-75">Medias</Link>
-          <Link href="/users" className="hover:opacity-75">Users</Link>
-          <Link href="/resend" className="hover:opacity-75">Resend</Link>
-        </h1>
-        <div className="space-x-2 flex items-center">
-          <ModeToggle />
-          {session ? (
-            <DropdownMenu>
-              <DropdownMenuTrigger>
-                <Avatar>
-                  <AvatarFallback>
-                    {nameExists
-                      ? session.user.name
-                        ?.split(" ")
-                        .map((word) => word[0].toUpperCase())
-                        .join("")
-                      : "~"}
-                  </AvatarFallback>
-                </Avatar>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent align="end" className="w-56">
-                <DropdownMenuLabel>
-                  <span className="font-semibold">
-                    {nameExists ? session.user.name : "New User"}
-                  </span>
-                </DropdownMenuLabel>
-                <DropdownMenuSeparator />
-                <Link href="/account">
-                  <DropdownMenuItem className="cursor-pointer">
-                    Account
-                  </DropdownMenuItem>
-                </Link>
-                <Link href="/api/auth/signout">
-                  <DropdownMenuItem className="cursor-pointer">
-                    Sign out
-                  </DropdownMenuItem>
-                </Link>
-              </DropdownMenuContent>
-            </DropdownMenu>
-          ) : (
+  // if (session?.user) {
+  return (
+    <nav className="py-2 flex items-center justify-between transition-all duration-300">
+      <h1 className="font-semibold space-x-4 transition-hover cursor-pointer">
+        <Link href="/" className="hover:opacity-75">Logo</Link>
+        <Link href="/posts" className="hover:opacity-75">Posts</Link>
+        <Link href="/feeds" className="hover:opacity-75">Feeds</Link>
+        <Link href="/medias" className="hover:opacity-75">Medias</Link>
+        <Link href="/users" className="hover:opacity-75">Users</Link>
+        <Link href="/resend" className="hover:opacity-75">Resend</Link>
+      </h1>
+      <div className="space-x-2 flex items-center">
+        <ModeToggle />
+        {/* {session ? ( */}
+        <DropdownMenu>
+          <DropdownMenuTrigger>
+            <Avatar>
+              <AvatarFallback>
+                {nameExists
+                  ? session.user.name
+                    ?.split(" ")
+                    .map((word) => word[0].toUpperCase())
+                    .join("")
+                  : "~"}
+              </AvatarFallback>
+            </Avatar>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent align="end" className="w-56">
+            <DropdownMenuLabel>
+              <span className="font-semibold">
+                {nameExists ? session.user.name : "New User"}
+              </span>
+            </DropdownMenuLabel>
+            <DropdownMenuSeparator />
+            <Link href="/account">
+              <DropdownMenuItem className="cursor-pointer">
+                Account
+              </DropdownMenuItem>
+            </Link>
+            <Link href="/api/auth/signout">
+              <DropdownMenuItem className="cursor-pointer">
+                Sign out
+              </DropdownMenuItem>
+            </Link>
+          </DropdownMenuContent>
+        </DropdownMenu>
+        {/* ) 
+          : (
             <Link href="/sign-in">Sign in</Link>
-          )}
+          )} */}
 
-        </div>
-      </nav>
-    );
-  } else return null;
+      </div>
+    </nav>
+  );
+  // } else return null;
 }
