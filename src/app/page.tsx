@@ -11,7 +11,7 @@ export default async function Home() {
           {JSON.stringify(session, null, 2)}
         </pre>
       ) : null}
-      <SignIn />
+      {/* <SignIn /> */}
       <h1>Home page</h1>
     </main>
   );
