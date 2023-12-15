@@ -19,7 +19,7 @@ export default async function Navbar() {
     session?.user.name.length > 5;
 
 
-  // if (session?.user) {
+  if (session?.user) {
   return (
     <nav className="py-2 flex items-center justify-between transition-all duration-300">
       <h1 className="font-semibold space-x-4 transition-hover cursor-pointer">
@@ -32,7 +32,7 @@ export default async function Navbar() {
       </h1>
       <div className="space-x-2 flex items-center">
         <ModeToggle />
-        {/* {session ? ( */}
+        {session ? (
         <DropdownMenu>
           <DropdownMenuTrigger>
             <Avatar>
@@ -65,13 +65,13 @@ export default async function Navbar() {
             </Link>
           </DropdownMenuContent>
         </DropdownMenu>
-        {/* ) 
+        ) 
           : (
             <Link href="/sign-in">Sign in</Link>
-          )} */}
+          )}
 
       </div>
     </nav>
   );
-  // } else return null;
+  } else return null;
 }

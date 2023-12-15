@@ -8,11 +8,7 @@ import { useToast } from "../ui/use-toast";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
-import {
-  Dialog,
-  DialogContent,
-  DialogTrigger,
-} from "../ui/dialogAuth";
+import { Dialog, DialogContent, DialogTrigger } from "../ui/dialogAuth";
 import { LoginFormModal } from "../general/form/LoginFormModal";
 import { TypeFormModal } from "@/lib/constant/TypeFormModal";
 import { SignupFormModal } from "../general/form/SignupFormMoadal";
@@ -33,10 +29,9 @@ export default async function PostList({ posts }: { posts: CompletePost[] }) {
   }
 
   const handleChangeModal = () => {
-    setOpen(!open)
-    console.log("hahahahahahaah")
-    setTypeFormModal(0)
-  }
+    setOpen(!open);
+    setTypeFormModal(0);
+  };
 
   return (
     <>
@@ -48,21 +43,19 @@ export default async function PostList({ posts }: { posts: CompletePost[] }) {
 
       <Dialog onOpenChange={handleChangeModal} open={open}>
         <DialogTrigger asChild>
-          <Button>
-            Login
-          </Button>
+          <Button>Login</Button>
         </DialogTrigger>
         <DialogContent>
           <div className="">
-            {
-              typeFormModal == 0 ?
-                <LoginFormModal setTypeFormModal={setTypeFormModal} /> :
-                typeFormModal == 1 ?
-                  <SignupFormModal setTypeFormModal={setTypeFormModal} /> :
-                  typeFormModal === 2 ?
-                    <ForgotForm setTypeFormModal={setTypeFormModal} /> :
-                    ''
-            }
+            {typeFormModal == 0 ? (
+              <LoginFormModal setTypeFormModal={setTypeFormModal} />
+            ) : typeFormModal == 1 ? (
+              <SignupFormModal setTypeFormModal={setTypeFormModal} />
+            ) : typeFormModal === 2 ? (
+              <ForgotForm setTypeFormModal={setTypeFormModal} />
+            ) : (
+              ""
+            )}
           </div>
         </DialogContent>
       </Dialog>
@@ -76,7 +69,8 @@ const Post = ({ post }: { post: CompletePost }) => {
   const utils = trpc.useContext();
   const [like, setLike] = useState(false);
   const onSuccess = async (action: "success" | "dislike") => {
-    await utils.users.getUsers.invalidate();
+    await utils.users.getUsers.refetch();
+    await utils.posts.getPosts.refetch();
     router.refresh();
     toast({
       title: "Success",
@@ -91,7 +85,7 @@ const Post = ({ post }: { post: CompletePost }) => {
       setLike(true);
     }
   };
-  const { mutate: likePost } = trpc.likes.createLike.useMutation({
+  const { mutate: likePost} = trpc.likes.createLike.useMutation({
     onSuccess: () => onSuccess("success"),
     // onSettled: () => trpc.posts.getPostById.useQuery({ id: post.id })
   });
@@ -111,30 +105,31 @@ const Post = ({ post }: { post: CompletePost }) => {
     if (isPostLiked) {
       setLike(isPostLiked.checkPostLiked);
     }
-  }, [isPostLiked, post]);
+  }, [isPostLiked]);
 
   const handleLikePost = (id: string) => {
-    if (session?.data == null && session?.status == 'unauthenticated') {
-      console.log("vo day")
-      router.push('/auth/signIn')
+    // if (session?.data == null && session?.status == 'unauthenticated') {
+    //   console.log("vo day")
+    //   router.push('/auth/signIn')
+    // } else {
+    const isLike = user?.likes.find(
+      (item) => item?.userId === user?.id && item?.postId === id
+    );
+    if (isLike !== undefined && like === false) {
+      console.log("isLikeeeeeee:", isLike)
+      const likeId = isLike?.id;
+      diskLikePost({
+        id: likeId,
+      });
+      refetch()
     } else {
-      const isLike = user?.likes.find(
-        (item) => item?.userId === user?.id && item?.postId === id
-      );
-      if (isLike !== undefined) {
-        const likeId = isLike?.id;
-        diskLikePost({
-          id: likeId,
-        });
-        refetch();
-      } else {
-        likePost({
-          postId: id,
-        });
-        refetch();
-      }
+      console.log("isLikeeeeeee:", isLike)
+      likePost({
+        postId: id,
+      });
+      refetch()
     }
-
+    // }
   };
   return (
     <li className="flex justify-between my-2">

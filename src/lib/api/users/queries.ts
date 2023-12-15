@@ -4,7 +4,7 @@ import { FollowedId } from "@/lib/db/schema/follows";
 
 export const getUsers = async () => {
   const { session } = await getUserAuth();
-  //@ts-ignore
+  // @ts-ignore
   const u = await db.user.findMany({
     where: { id: { not: session?.user.id } },
     // @ts-ignore

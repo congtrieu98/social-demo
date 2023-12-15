@@ -12,9 +12,12 @@ import { getUserAuth } from "@/lib/auth/utils";
 export const createLike = async (like: NewLikeParams) => {
   const { session } = await getUserAuth();
   const newLike = insertLikeSchema.parse({ ...like, userId: session?.user.id! });
-  console.log("newLikeeeeeeeee:", newLike)
   try {
     //@ts-ignore
+    const firstLike = await db.like.findFirst({where: {
+      postId: like.postId,
+      userId: session?.user.id
+    }})
     const l = await db.like.create({ data: newLike });
     return { like: l };
   } catch (err) {

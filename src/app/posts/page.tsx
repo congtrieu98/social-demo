@@ -4,7 +4,7 @@ import { getPosts } from "@/lib/api/posts/queries";
 import { checkAuth } from "@/lib/auth/utils";
 
 export default async function Posts() {
-  // await checkAuth();
+  await checkAuth();
   const { posts } = await getPosts();
 
   return (
