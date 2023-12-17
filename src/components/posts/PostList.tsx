@@ -13,7 +13,6 @@ import { LoginFormModal } from "../general/form/LoginFormModal";
 import { TypeFormModal } from "@/lib/constant/TypeFormModal";
 import { SignupFormModal } from "../general/form/SignupFormMoadal";
 import { ForgotForm } from "../general/form/ForgotForm";
-import { useSession } from "next-auth/react";
 
 export default async function PostList({ posts }: { posts: CompletePost[] }) {
   const { data: p } = trpc.posts.getPosts.useQuery(undefined, {
@@ -63,39 +62,36 @@ export default async function PostList({ posts }: { posts: CompletePost[] }) {
   );
 }
 const Post = ({ post }: { post: CompletePost }) => {
-  const session = useSession();
   const { toast } = useToast();
   const router = useRouter();
   const utils = trpc.useContext();
   const [like, setLike] = useState(false);
-  const onSuccess = async (action: "success" | "dislike") => {
-    await utils.users.getUsers.refetch();
-    await utils.posts.getPosts.refetch();
+  const onSuccess = async (action: "success") => {
+    await utils.users.getUsers.invalidate();
     router.refresh();
-    toast({
-      title: "Success",
-      description: `${action === "success" ? "Like" : "Dislike"} successfully!`,
-      variant: "default",
-    });
-    if (action === "dislike") {
-      setLike(false);
-    }
-
-    if (action === "success") {
-      setLike(true);
+    if (action == "success") {
+      if (like) {
+        setLike(false);
+        toast({
+          title: "Success",
+          description: "Dislike successfully!",
+          variant: "default",
+        });
+      } else {
+        setLike(true);
+        toast({
+          title: "Success",
+          description: "Like successfully!",
+          variant: "default",
+        });
+      }
     }
   };
-  const { mutate: likePost} = trpc.likes.createLike.useMutation({
+  const { mutate: likePost } = trpc.likes.createLike.useMutation({
     onSuccess: () => onSuccess("success"),
-    // onSettled: () => trpc.posts.getPostById.useQuery({ id: post.id })
+    onSettled: () => trpc.posts.getPosts.useQuery()
   });
 
-  const { mutate: diskLikePost } = trpc.likes.deleteLike.useMutation({
-    onSuccess: () => onSuccess("dislike"),
-    // onSettled: () => trpc.posts.getPostById.useQuery({ id: post.id })
-  });
-
-  const { data: user } = trpc.users.getUserById.useQuery();
   const {
     data: isPostLiked,
     refetch,
@@ -107,28 +103,16 @@ const Post = ({ post }: { post: CompletePost }) => {
     }
   }, [isPostLiked]);
 
+  console.log("postttttt:", post)
   const handleLikePost = (id: string) => {
+    console.log(id)
+    likePost({
+      postId: id,
+    });
     // if (session?.data == null && session?.status == 'unauthenticated') {
     //   console.log("vo day")
     //   router.push('/auth/signIn')
     // } else {
-    const isLike = user?.likes.find(
-      (item) => item?.userId === user?.id && item?.postId === id
-    );
-    if (isLike !== undefined && like === false) {
-      console.log("isLikeeeeeee:", isLike)
-      const likeId = isLike?.id;
-      diskLikePost({
-        id: likeId,
-      });
-      refetch()
-    } else {
-      console.log("isLikeeeeeee:", isLike)
-      likePost({
-        postId: id,
-      });
-      refetch()
-    }
     // }
   };
   return (

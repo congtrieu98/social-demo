@@ -7,6 +7,7 @@ export const postSchema = z.object({
   slug: z.string(),
   content: z.string(),
   userId: z.string(),
+  likeTotal: z.number().int().nullish(),
 })
 
 export interface CompletePost extends z.infer<typeof postSchema> {

@@ -18,10 +18,10 @@ export default function FeedList({ feeds }: { feeds: CompleteFeed[] }) {
   return (
     <ul>
       {f.feeds.map((feed: CompleteFeed, index) => (
-        <>
-        <Feed feed={feed} key={feed.id} />
-        {index < f.feeds.length - 1 && <div className="h-[1px] bg-gray-200 w-full"></div>}
-        </>
+        <div key={feed.id}>
+          <Feed feed={feed} />
+          {index < f.feeds.length - 1 && <div className="h-[1px] bg-gray-200 w-full"></div>}
+        </div>
       ))}
     </ul>
   );
@@ -33,8 +33,8 @@ const Feed = ({ feed }: { feed: CompleteFeed }) => {
       <li className="relative flex-col justify-between my-2">
         <div className="mt-2 text-center mb-2">{feed.content}</div>
         <div className="flex justify-center items-center w-full">
-            {<FeedImagesModal medias={feed.medias} />}
-          </div>
+          {<FeedImagesModal medias={feed.medias} />}
+        </div>
         <div className="absolute -top-2 right-20">
           <FeedModal feed={feed} />
         </div>

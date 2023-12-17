@@ -6,14 +6,14 @@ import { getLikes } from "@/lib/api/likes/queries";
 // Schema for likes - used to validate API requests
 export const insertLikeSchema = likeSchema.omit({ id: true });
 
-export const insertLikeParams = likeSchema.extend({}).omit({ 
+export const insertLikeParams = likeSchema.extend({}).omit({
   id: true,
   userId: true
 });
 
 export const updateLikeSchema = likeSchema;
 
-export const updateLikeParams = updateLikeSchema.extend({}).omit({ 
+export const updateLikeParams = updateLikeSchema.extend({}).omit({
   userId: true
 });
 
@@ -25,7 +25,7 @@ export type NewLike = z.infer<typeof insertLikeSchema>;
 export type NewLikeParams = z.infer<typeof insertLikeParams>;
 export type UpdateLikeParams = z.infer<typeof updateLikeParams>;
 export type LikeId = z.infer<typeof likeIdSchema>["id"];
-    
+
 // this type infers the return from getLikes() - meaning it will include any joins
 export type CompleteLike = Awaited<ReturnType<typeof getLikes>>["likes"][number];
 
