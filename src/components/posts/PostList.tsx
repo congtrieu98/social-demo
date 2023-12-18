@@ -7,6 +7,7 @@ import { Button } from "../ui/button";
 import { useToast } from "../ui/use-toast";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+import { io } from "socket.io-client"
 
 import { Dialog, DialogContent, DialogTrigger } from "../ui/dialogAuth";
 import { LoginFormModal } from "../general/form/LoginFormModal";
@@ -19,6 +20,7 @@ export default async function PostList({ posts }: { posts: CompletePost[] }) {
     initialData: { posts },
     refetchOnMount: false,
   });
+
 
   const [open, setOpen] = useState(false);
   const [typeFormModal, setTypeFormModal] = useState<TypeFormModal>(0);
@@ -66,6 +68,8 @@ const Post = ({ post }: { post: CompletePost }) => {
   const router = useRouter();
   const utils = trpc.useContext();
   const [like, setLike] = useState(false);
+  // const socket = io('http://localhost:3000')
+
   const onSuccess = async (action: "success") => {
     await utils.users.getUsers.invalidate();
     router.refresh();
@@ -89,23 +93,36 @@ const Post = ({ post }: { post: CompletePost }) => {
   };
   const { mutate: likePost } = trpc.likes.createLike.useMutation({
     onSuccess: () => onSuccess("success"),
-    onSettled: () => trpc.posts.getPosts.useQuery()
+    // onSettled: () => trpc.posts.getPosts.useQuery()
   });
+
+  trpc.ws.wsSubscription.useSubscription(undefined, {
+    onData(data) {
+      console.log(data)
+    }
+  })
+
+  const {mutate} = trpc.ws.tesMutation.useMutation()
 
   const {
     data: isPostLiked,
     refetch,
     status,
   } = trpc.posts.getPostLiked.useQuery({ id: post.id });
+
   useEffect(() => {
     if (isPostLiked) {
       setLike(isPostLiked.checkPostLiked);
     }
   }, [isPostLiked]);
 
-  console.log("postttttt:", post)
+  // useEffect(() => {
+  //   socket.on('user-connect', () => {
+  //     console.log('user connected')
+  //   })
+  // }, [])
+
   const handleLikePost = (id: string) => {
-    console.log(id)
     likePost({
       postId: id,
     });
@@ -127,7 +144,8 @@ const Post = ({ post }: { post: CompletePost }) => {
         <div className="w-full">
           <div>{post.content}</div>
         </div>
-        <Button className="w-1/2" onClick={() => handleLikePost(post.id)}>
+        {/*  handleLikePost(post.id) */}
+        <Button className="w-1/2" onClick={() => mutate}>
           {status === "loading" ? "loading..." : like ? "Liked" : "Like"}
         </Button>
         <div className="w-full">

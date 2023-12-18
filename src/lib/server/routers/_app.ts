@@ -6,6 +6,7 @@ import { mediasRouter } from "./medias";
 import { usersRouter } from "./users";
 import { followsRouter } from "./follows";
 import { likesRouter } from "./likes";
+import { webSockets } from "./webSockets";
 
 export const appRouter = router({
   computers: computersRouter,
@@ -15,6 +16,7 @@ export const appRouter = router({
   users: usersRouter,
   follows: followsRouter,
   likes: likesRouter,
+  ws: webSockets
 });
 
 export type AppRouter = typeof appRouter;

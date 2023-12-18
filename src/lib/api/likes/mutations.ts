@@ -33,10 +33,11 @@ export const createLike = async (like: NewLikeParams) => {
       })
 
       const checkUserLike = await db.user.findFirst({
-        where: { id: { not: findPostById?.userId }, AND: { id: l.userId } }
+        where: { id: { not: l.userId }, AND: { id: findPostById?.userId } }
       });
 
       console.log("firtLikeeeeee:", checkUserLike)
+      console.log("findPostByIddddddd:", findPostById)
       console.log("firtLikeeeeeeuihturehgrkgbkbgrgbrgkbgkbkgbkjgbkfd")
       console.log("firtLikeeeeeeuihturehgrkgbkbgrgbrgkbgkbkgbkjgbkfd")
       console.log("firtLikeeeeeeuihturehgrkgbkbgrgbrgkbgkbkgbkjgbkfd")
@@ -50,7 +51,7 @@ export const createLike = async (like: NewLikeParams) => {
           to: [email as string],
           subject: `Hello ${name}!`,
           // @ts-ignore
-          react: EmailLiked({ name: name, user: checkUserLike }),
+          react: EmailLiked({ name: session?.user.name, user: session?.user }),
           text: "Email powered by Resend.",
         });
       }
