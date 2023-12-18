@@ -38,11 +38,6 @@ export const createLike = async (like: NewLikeParams) => {
 
       console.log("firtLikeeeeee:", checkUserLike)
       console.log("findPostByIddddddd:", findPostById)
-      console.log("firtLikeeeeeeuihturehgrkgbkbgrgbrgkbgkbkgbkjgbkfd")
-      console.log("firtLikeeeeeeuihturehgrkgbkbgrgbrgkbgkbkgbkjgbkfd")
-      console.log("firtLikeeeeeeuihturehgrkgbkbgrgbrgkbgkbkgbkjgbkfd")
-      console.log("firtLikeeeeeeuihturehgrkgbkbgrgbrgkbgkbkgbkjgbkfd")
-      console.log("firtLikeeeeeeuihturehgrkgbkbgrgbrgkbgkbkgbkjgbkfd")
 
       if (checkUserLike) {
         const { name, email } = checkUserLike;
