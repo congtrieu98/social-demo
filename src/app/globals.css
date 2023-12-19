@@ -70,6 +70,13 @@
   }
 }
 
+.suzu_truncate-2 {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  -webkit-line-clamp: 2;
+}
+
 @layer base {
   * {
     @apply border-border;
