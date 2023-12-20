@@ -6,12 +6,11 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
-  DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 
+import { useToast } from "../ui/use-toast";
 import { Carousel } from "react-responsive-carousel";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import LottieAnimate from "../lottie/LottieAnimate";
@@ -19,6 +18,7 @@ import Link from "next/link";
 
 export function HomeComponent() {
   const [readmore, setReadmore] = useState(true);
+  const { toast } = useToast();
   const listSlide = [
     {
       id: 1,
@@ -46,6 +46,34 @@ export function HomeComponent() {
       image: "/assets/image/image-4.jpg",
     },
   ];
+
+  const handleCopyUrl = async () => {
+    // Lấy URL hiện tại của trang
+    const url = window.location.href;
+    navigator.clipboard.writeText(url)
+    toast({
+      title: "Success",
+      description: "!URL đã được sao chép!",
+      variant: "default",
+    });
+
+    // navigator.clipboard.writeText(url).then(
+    //   function () {
+    //     toast({
+    //       title: "Success",
+    //       description: "!URL đã được sao chép!",
+    //       variant: "default",
+    //     });
+    //   },
+    //   function (err) {
+    //     toast({
+    //       title: "Error",
+    //       description: "Không thể sao chép URL!",
+    //       variant: "default",
+    //     });
+    //   }
+    // );
+  };
 
   return (
     <div className="article flex max-w-full flex-col py-4 items-start gap-2.5 rounded-[20px] bg-white">
@@ -372,11 +400,11 @@ export function HomeComponent() {
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end" className="w-56">
-              <Link href="/">
+              <div onClick={handleCopyUrl}>
                 <DropdownMenuItem className="cursor-pointer">
                 Sao chép liên kết
                 </DropdownMenuItem>
-              </Link>
+              </div>
             </DropdownMenuContent>
           </DropdownMenu>
         </div>
