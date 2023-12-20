@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-async-client-component */
 import { getUserAuth } from "@/lib/auth/utils";
 import Link from "next/link";
 import {
@@ -9,44 +10,42 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 
-import { ModeToggle } from "@/components/ui/ThemeToggle";
 import { Button } from "./ui/button";
 
 export default async function Navbar() {
   const { session } = await getUserAuth();
-  const nameExists = !!session?.user.name && session?.user.name.length > 5;
 
   if (session?.user) {
     return (
       <div className="py-4 flex items-center justify-center self-stretch">
-        <div className="flex justify-between items-center">
-          <Link
-          href="/"
-          className="logo w-10 h-10 flex-shrink-0">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="36"
-              height="32"
-              viewBox="0 0 36 32"
-              fill="none"
-            >
-              <path
-                d="M14.6235 10.497C11.9966 12.4142 10.2548 15.1169 11.3319 17.3691C12.2647 19.3116 14.1508 18.8912 14.1508 18.8912C8.83331 21.8333 2.84036 22.2656 1.6538 18.5751C0.467228 14.8846 2.35178 6.28648 11.0972 2.15498C14.9805 0.32315 20.155 0.50333 20.7261 3.90937C21.3051 7.36757 16.3717 9.21836 14.6235 10.497Z"
-                stroke="#0F172A"
-                stroke-width="2"
-              />
-              <path
-                d="M25.1889 5.71262C21.6594 6.66094 22.1511 14.3423 14.5923 18.6492C8.83557 21.9304 2.84563 22.2655 1.65589 18.575C5.75494 31.3583 17.5381 26.2374 21.1375 23.2328C26.6404 18.6382 25.8695 11.6712 27.6842 11.3361C28.0475 11.2555 30.2065 10.8952 32.072 13.1127C34.8243 16.3828 34.1342 21.3314 34.0819 21.6554C34.8369 18.978 34.8322 16.1694 34.2405 13.8871C32.9064 8.70298 28.7185 4.76114 25.1889 5.71262Z"
-                stroke="#0F172A"
-                stroke-width="2"
-              />
-              <path
-                d="M27.6335 11.3489C27.6335 11.3489 30.0304 10.6835 32.0752 13.1127C34.8275 16.3828 34.1326 21.3362 34.0851 21.6555C33.0651 25.267 30.6618 28.6398 26.4215 30.154C20.5756 32.2413 14.6756 30.217 10.908 26.8041C16.4902 26.8746 20.6568 23.8746 22.172 22.3261C23.7164 22.8327 25.3629 22.6714 26.8578 21.9131C32.4813 19.0603 30.4413 12.882 28.7963 11.7235C28.3061 11.3789 27.9333 11.2698 27.6335 11.3489Z"
-                stroke="#0F172A"
-                stroke-width="2"
-              />
-            </svg>
-          </Link>
+        <div className="flex justify-between items-center lg:min-w-[1168px] ">
+          <div className="logo w-10 h-10 flex-shrink-0">
+            <Link href="/">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="36"
+                height="32"
+                viewBox="0 0 36 32"
+                fill="none"
+              >
+                <path
+                  d="M14.6235 10.497C11.9966 12.4142 10.2548 15.1169 11.3319 17.3691C12.2647 19.3116 14.1508 18.8912 14.1508 18.8912C8.83331 21.8333 2.84036 22.2656 1.6538 18.5751C0.467228 14.8846 2.35178 6.28648 11.0972 2.15498C14.9805 0.32315 20.155 0.50333 20.7261 3.90937C21.3051 7.36757 16.3717 9.21836 14.6235 10.497Z"
+                  stroke="#0F172A"
+                  stroke-width="2"
+                />
+                <path
+                  d="M25.1889 5.71262C21.6594 6.66094 22.1511 14.3423 14.5923 18.6492C8.83557 21.9304 2.84563 22.2655 1.65589 18.575C5.75494 31.3583 17.5381 26.2374 21.1375 23.2328C26.6404 18.6382 25.8695 11.6712 27.6842 11.3361C28.0475 11.2555 30.2065 10.8952 32.072 13.1127C34.8243 16.3828 34.1342 21.3314 34.0819 21.6554C34.8369 18.978 34.8322 16.1694 34.2405 13.8871C32.9064 8.70298 28.7185 4.76114 25.1889 5.71262Z"
+                  stroke="#0F172A"
+                  stroke-width="2"
+                />
+                <path
+                  d="M27.6335 11.3489C27.6335 11.3489 30.0304 10.6835 32.0752 13.1127C34.8275 16.3828 34.1326 21.3362 34.0851 21.6555C33.0651 25.267 30.6618 28.6398 26.4215 30.154C20.5756 32.2413 14.6756 30.217 10.908 26.8041C16.4902 26.8746 20.6568 23.8746 22.172 22.3261C23.7164 22.8327 25.3629 22.6714 26.8578 21.9131C32.4813 19.0603 30.4413 12.882 28.7963 11.7235C28.3061 11.3789 27.9333 11.2698 27.6335 11.3489Z"
+                  stroke="#0F172A"
+                  stroke-width="2"
+                />
+              </svg>
+            </Link>
+          </div>
           {/* end logo */}
 
           <div className="nav-bar flex justify-center items-center gap-1">
@@ -141,39 +140,41 @@ export default async function Navbar() {
               </svg>
             </Link>
 
-            {/* <Button className=" h-10 flex p-2 rounded-full flex-col justify-center items-start gap-1 flex-cold bg-slate-100">
-              <div className="flex gap-2">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="20"
-                  height="14"
-                  viewBox="0 0 20 14"
-                  fill="none"
-                >
-                  <path
-                    d="M1 7L19 7M1 1L19 1M7 13L19 13"
-                    stroke="#0F172A"
-                    stroke-width="2"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                  />
-                </svg>
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="21"
-                  height="20"
-                  viewBox="0 0 21 20"
-                  fill="none"
-                ></svg>
-              </div>
-            </Button> */}
-            <div className="space-x-2 flex items-center">
-              {session ? (
-                <DropdownMenu>
-                  <DropdownMenuTrigger>
+          </div>
+          {/* End navbar */}
+
+          <div className="icon-menu space-x-2 flex items-center">
+            {session ? (
+              <DropdownMenu>
+                <DropdownMenuTrigger>
+                  <div className="hidden md:block">
+                    <Button
+                      className=" h-10 flex p-2 rounded-full flex-col justify-center items-start gap-1 flex-cold ">
+                      <div className="flex gap-2">
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="20"
+                          height="14"
+                          viewBox="0 0 20 14"
+                          fill="none"
+                        >
+                          <path
+                            d="M1 7L19 7M1 1L19 1M7 13L19 13"
+                            stroke="#0F172A"
+                            stroke-width="2"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                          />
+                        </svg>
+                      </div>
+                    </Button>
+                  </div>
+
+                  <div className="md:hidden">
                     <Avatar>
                       <AvatarFallback>
-                        <Button className=" h-10 flex p-2 rounded-full flex-col justify-center items-start gap-1 flex-cold bg-slate-100">
+                        <Button
+                          className=" h-10 flex p-2 rounded-full flex-col justify-center items-start gap-1 flex-cold ">
                           <div className="flex gap-2">
                             <svg
                               xmlns="http://www.w3.org/2000/svg"
@@ -194,152 +195,79 @@ export default async function Navbar() {
                         </Button>
                       </AvatarFallback>
                     </Avatar>
-                  </DropdownMenuTrigger>
-                  <DropdownMenuContent align="end" className="w-56">
+                  </div>
+
+
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="end" className="w-56">
                   <Link href="/posts">
-                      <DropdownMenuItem className="cursor-pointer">
+                    <DropdownMenuItem className="cursor-pointer">
                       Tham gia vào SuZu!
-                      </DropdownMenuItem>
-                    </Link>
-                    <DropdownMenuSeparator />
-                    <Link href="/posts">
-                      <DropdownMenuItem className="cursor-pointer">
+                    </DropdownMenuItem>
+                  </Link>
+                  <DropdownMenuSeparator />
+                  <Link href="/posts">
+                    <DropdownMenuItem className="cursor-pointer">
                       Tạo tài khoản
-                      </DropdownMenuItem>
-                    </Link>
-                    <DropdownMenuSeparator />
-                    <Link href="/posts">
-                      <DropdownMenuItem className="cursor-pointer">
+                    </DropdownMenuItem>
+                  </Link>
+                  <DropdownMenuSeparator />
+                  <Link href="/posts">
+                    <DropdownMenuItem className="cursor-pointer">
                       Hỗ trợ
-                      </DropdownMenuItem>
-                    </Link>
-                    <DropdownMenuSeparator />
-                    <Link href="/posts">
-                      <DropdownMenuItem className="cursor-pointer">
+                    </DropdownMenuItem>
+                  </Link>
+                  <DropdownMenuSeparator />
+                  <Link href="/posts">
+                    <DropdownMenuItem className="cursor-pointer">
                       Báo lỗi
-                      </DropdownMenuItem>
-                    </Link>
-                    <DropdownMenuSeparator />
-
-
-
-                    <Link href="/posts">
-                      <DropdownMenuItem className="cursor-pointer">
-                        Posts
-                      </DropdownMenuItem>
-                    </Link>
-                    <DropdownMenuSeparator />
-                    <Link href="/feeds">
-                      <DropdownMenuItem className="cursor-pointer">
-                        Feeds
-                      </DropdownMenuItem>
-                    </Link>
-                    <DropdownMenuSeparator />
-                    <Link href="/medias">
-                      <DropdownMenuItem className="cursor-pointer">
-                        Medias
-                      </DropdownMenuItem>
-                    </Link>
-                    <DropdownMenuSeparator />
-                    <Link href="/users">
-                      <DropdownMenuItem className="cursor-pointer">
-                        Users
-                      </DropdownMenuItem>
-                    </Link>
-                    <DropdownMenuSeparator />
-                    <Link href="/account">
-                      <DropdownMenuItem className="cursor-pointer">
-                        Account
-                      </DropdownMenuItem>
-                    </Link>
-                    <DropdownMenuSeparator />
-                    <Link href="/api/auth/signout">
-                      <DropdownMenuItem className="cursor-pointer">
-                        Sign out
-                      </DropdownMenuItem>
-                    </Link>
-                  </DropdownMenuContent>
-                </DropdownMenu>
-              ) : (
-                <Link href="/sign-in">Sign in</Link>
-              )}
-            </div>
+                    </DropdownMenuItem>
+                  </Link>
+                  <DropdownMenuSeparator />
+                  <Link href="/posts">
+                    <DropdownMenuItem className="cursor-pointer">
+                      Posts
+                    </DropdownMenuItem>
+                  </Link>
+                  <DropdownMenuSeparator />
+                  <Link href="/feeds">
+                    <DropdownMenuItem className="cursor-pointer">
+                      Feeds
+                    </DropdownMenuItem>
+                  </Link>
+                  <DropdownMenuSeparator />
+                  <Link href="/medias">
+                    <DropdownMenuItem className="cursor-pointer">
+                      Medias
+                    </DropdownMenuItem>
+                  </Link>
+                  <DropdownMenuSeparator />
+                  <Link href="/users">
+                    <DropdownMenuItem className="cursor-pointer">
+                      Users
+                    </DropdownMenuItem>
+                  </Link>
+                  <DropdownMenuSeparator />
+                  <Link href="/account">
+                    <DropdownMenuItem className="cursor-pointer">
+                      Account
+                    </DropdownMenuItem>
+                  </Link>
+                  <DropdownMenuSeparator />
+                  <Link href="/api/auth/signout">
+                    <DropdownMenuItem className="cursor-pointer">
+                      Sign out
+                    </DropdownMenuItem>
+                  </Link>
+                </DropdownMenuContent>
+              </DropdownMenu>
+            ) : (
+              <Link href="/sign-in">Sign in</Link>
+            )}
           </div>
-          {/* End navbar */}
+          {/* End icon-menu */}
         </div>
       </div>
     );
   } else return null;
-}
-
-{
-  /* <h1 className="font-semibold space-x-4 transition-hover cursor-pointer">
-        <Link href="/" className="hover:opacity-75">Logo</Link>
-        <Link href="/posts" className="hover:opacity-75">Posts</Link>
-        <Link href="/feeds" className="hover:opacity-75">Feeds</Link>
-        <Link href="/medias" className="hover:opacity-75">Medias</Link>
-        <Link href="/users" className="hover:opacity-75">Users</Link>
-        <Link href="/resend" className="hover:opacity-75">Resend</Link>
-      </h1>
-      <div className="space-x-2 flex items-center">
-        <ModeToggle />
-        {session ? (
-        <DropdownMenu>
-          <DropdownMenuTrigger>
-            <Avatar>
-              <AvatarFallback>
-                {nameExists
-                  ? session.user.name
-                    ?.split(" ")
-                    .map((word) => word[0].toUpperCase())
-                    .join("")
-                  : "~"}
-              </AvatarFallback>
-            </Avatar>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end" className="w-56">
-            <DropdownMenuLabel>
-              <span className="font-semibold">
-                {nameExists ? session.user.name : "New User"}
-              </span>
-            </DropdownMenuLabel>
-            <DropdownMenuSeparator />
-            <Link href="/posts">
-              <DropdownMenuItem className="cursor-pointer">
-                Posts
-              </DropdownMenuItem>
-            </Link>
-            <Link href="/feeds">
-              <DropdownMenuItem className="cursor-pointer">
-                Feeds
-              </DropdownMenuItem>
-            </Link>
-            <Link href="/medias">
-              <DropdownMenuItem className="cursor-pointer">
-                Medias
-              </DropdownMenuItem>
-            </Link>
-            <Link href="/users">
-              <DropdownMenuItem className="cursor-pointer">
-                Users
-              </DropdownMenuItem>
-            </Link>
-            <Link href="/account">
-              <DropdownMenuItem className="cursor-pointer">
-                Account
-              </DropdownMenuItem>
-            </Link>
-            <Link href="/api/auth/signout">
-              <DropdownMenuItem className="cursor-pointer">
-                Sign out
-              </DropdownMenuItem>
-            </Link>
-          </DropdownMenuContent>
-        </DropdownMenu>
-        ) 
-          : (
-            <Link href="/sign-in">Sign in</Link>
-          )}
-
-      </div> */
 }

@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 "use client";
 
 import { useState } from "react";
@@ -185,13 +186,6 @@ export function HomeComponent() {
                         stroke-linejoin="round"
                       />
                     </svg>
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="21"
-                      height="20"
-                      viewBox="0 0 21 20"
-                      fill="none"
-                    ></svg>
                   </div>
                 </Button>
                 {/* </AvatarFallback>
@@ -231,9 +225,8 @@ export function HomeComponent() {
 
       <div className="paragraph flex px-4 items-start flex-col self-stretch">
         <div
-          className={`${
-            readmore ? "suzu_truncate-2" : ""
-          } text-slate-900 text-m font-normal leading-[150%]`}
+          className={`${readmore ? "suzu_truncate-2" : ""
+            } text-slate-900 text-m font-normal leading-[150%]`}
         >
           Leo quis ultrices amet in eget amet gravida. Nunc id ut egestas
           condimentum. Integer vitae orci mauris est posuere ullamcorper dui
@@ -402,7 +395,7 @@ export function HomeComponent() {
             <DropdownMenuContent align="end" className="w-56">
               <div onClick={handleCopyUrl}>
                 <DropdownMenuItem className="cursor-pointer">
-                Sao chép liên kết
+                  Sao chép liên kết
                 </DropdownMenuItem>
               </div>
             </DropdownMenuContent>
