@@ -2,10 +2,20 @@
 
 import { useState } from "react";
 import { Button } from "../ui/button";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 
 import { Carousel } from "react-responsive-carousel";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import LottieAnimate from "../lottie/LottieAnimate";
+import Link from "next/link";
 
 export function HomeComponent() {
   const [readmore, setReadmore] = useState(true);
@@ -13,27 +23,27 @@ export function HomeComponent() {
     {
       id: 1,
       name: "slide 1",
-      image: '/assets/image/avatar-post.jpg'
+      image: "/assets/image/avatar-post.jpg",
     },
     {
       id: 2,
       name: "slide 2",
-      image: '/assets/image/image-1.jpg'
+      image: "/assets/image/image-1.jpg",
     },
     {
       id: 3,
       name: "slide 3",
-      image: '/assets/image/image-2.jpg'
+      image: "/assets/image/image-2.jpg",
     },
     {
       id: 4,
       name: "slide 4",
-      image: '/assets/image/image-3.jpg'
+      image: "/assets/image/image-3.jpg",
     },
     {
       id: 5,
       name: "slide 5",
-      image: '/assets/image/image-4.jpg'
+      image: "/assets/image/image-4.jpg",
     },
   ];
 
@@ -43,11 +53,11 @@ export function HomeComponent() {
         <div className="flex items-center gap-2 flex-1">
           <div className="relative flex w-10 h-10 flex-col items-start">
             <div className="flex rounded-tl-[10px] rounded-br-[10px] rounded-tr-[4px] rounded-bl-[4px] bg-slate-200 flex-col justify-center items-center gap-2.5">
-              <img 
-                  src="/assets/image/avatar-post.jpg"
-                  alt=""
-                  className="w-full h-full rounded-tl-[10px] rounded-br-[10px] rounded-tr-[4px] rounded-bl-[4px]"
-                  />
+              <img
+                src="/assets/image/avatar-post.jpg"
+                alt=""
+                className="w-full h-full rounded-tl-[10px] rounded-br-[10px] rounded-tr-[4px] rounded-bl-[4px]"
+              />
               {/* <div className="text-slate-900 text-m font-normal leading-6">
                 AB
               </div> */}
@@ -99,59 +109,93 @@ export function HomeComponent() {
             1 ngày
           </div>
           <div className="flex px-2 flex-col items-start">
-            <Button className="flex p-2 flex-col justify-center items-start gap-1 self-stretch rounded-full">
-              <div className="flex gap-2 items-start">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="18"
-                  height="4"
-                  viewBox="0 0 18 4"
-                  fill="none"
-                  className="mt-2.5"
-                >
-                  <path
-                    d="M9 3C9.55228 3 10 2.55228 10 2C10 1.44772 9.55228 1 9 1C8.44772 1 8 1.44772 8 2C8 2.55228 8.44772 3 9 3Z"
-                    fill="#0F172A"
-                  />
-                  <path
-                    d="M16 3C16.5523 3 17 2.55228 17 2C17 1.44772 16.5523 1 16 1C15.4477 1 15 1.44772 15 2C15 2.55228 15.4477 3 16 3Z"
-                    fill="#0F172A"
-                  />
-                  <path
-                    d="M2 3C2.55228 3 3 2.55228 3 2C3 1.44772 2.55228 1 2 1C1.44772 1 1 1.44772 1 2C1 2.55228 1.44772 3 2 3Z"
-                    fill="#0F172A"
-                  />
-                  <path
-                    d="M9 3C9.55228 3 10 2.55228 10 2C10 1.44772 9.55228 1 9 1C8.44772 1 8 1.44772 8 2C8 2.55228 8.44772 3 9 3Z"
-                    stroke="#0F172A"
-                    stroke-width="2"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                  />
-                  <path
-                    d="M16 3C16.5523 3 17 2.55228 17 2C17 1.44772 16.5523 1 16 1C15.4477 1 15 1.44772 15 2C15 2.55228 15.4477 3 16 3Z"
-                    stroke="#0F172A"
-                    stroke-width="2"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                  />
-                  <path
-                    d="M2 3C2.55228 3 3 2.55228 3 2C3 1.44772 2.55228 1 2 1C1.44772 1 1 1.44772 1 2C1 2.55228 1.44772 3 2 3Z"
-                    stroke="#0F172A"
-                    stroke-width="2"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                  />
-                </svg>
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="21"
-                  height="20"
-                  viewBox="0 0 21 20"
-                  fill="none"
-                ></svg>
-              </div>
-            </Button>
+            <DropdownMenu>
+              <DropdownMenuTrigger>
+                {/* <Avatar>
+                  <AvatarFallback> */}
+                <Button className="flex p-2 flex-col justify-center items-start gap-1 self-stretch rounded-full">
+                  <div className="flex gap-2 items-start">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="18"
+                      height="4"
+                      viewBox="0 0 18 4"
+                      fill="none"
+                      className="mt-2.5"
+                    >
+                      <path
+                        d="M9 3C9.55228 3 10 2.55228 10 2C10 1.44772 9.55228 1 9 1C8.44772 1 8 1.44772 8 2C8 2.55228 8.44772 3 9 3Z"
+                        fill="#0F172A"
+                      />
+                      <path
+                        d="M16 3C16.5523 3 17 2.55228 17 2C17 1.44772 16.5523 1 16 1C15.4477 1 15 1.44772 15 2C15 2.55228 15.4477 3 16 3Z"
+                        fill="#0F172A"
+                      />
+                      <path
+                        d="M2 3C2.55228 3 3 2.55228 3 2C3 1.44772 2.55228 1 2 1C1.44772 1 1 1.44772 1 2C1 2.55228 1.44772 3 2 3Z"
+                        fill="#0F172A"
+                      />
+                      <path
+                        d="M9 3C9.55228 3 10 2.55228 10 2C10 1.44772 9.55228 1 9 1C8.44772 1 8 1.44772 8 2C8 2.55228 8.44772 3 9 3Z"
+                        stroke="#0F172A"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                      />
+                      <path
+                        d="M16 3C16.5523 3 17 2.55228 17 2C17 1.44772 16.5523 1 16 1C15.4477 1 15 1.44772 15 2C15 2.55228 15.4477 3 16 3Z"
+                        stroke="#0F172A"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                      />
+                      <path
+                        d="M2 3C2.55228 3 3 2.55228 3 2C3 1.44772 2.55228 1 2 1C1.44772 1 1 1.44772 1 2C1 2.55228 1.44772 3 2 3Z"
+                        stroke="#0F172A"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                      />
+                    </svg>
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="21"
+                      height="20"
+                      viewBox="0 0 21 20"
+                      fill="none"
+                    ></svg>
+                  </div>
+                </Button>
+                {/* </AvatarFallback>
+                </Avatar> */}
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end" className="w-56">
+                <Link href="/">
+                  <DropdownMenuItem className="cursor-pointer">
+                    Trang cá nhân
+                  </DropdownMenuItem>
+                </Link>
+                <DropdownMenuSeparator />
+                <Link href="/s">
+                  <DropdownMenuItem className="cursor-pointer">
+                    Theo dõi
+                  </DropdownMenuItem>
+                </Link>
+                <DropdownMenuSeparator />
+                <Link href="/">
+                  <DropdownMenuItem className="cursor-pointer">
+                    Lưu bài viết
+                  </DropdownMenuItem>
+                </Link>
+                <DropdownMenuSeparator />
+                <Link href="/">
+                  <DropdownMenuItem className="cursor-pointer text-danger-500">
+                    Báo cáo vi phạm
+                  </DropdownMenuItem>
+                </Link>
+                <DropdownMenuSeparator />
+              </DropdownMenuContent>
+            </DropdownMenu>
           </div>
         </div>
       </div>
@@ -193,13 +237,9 @@ export function HomeComponent() {
       {/* End paragraph */}
 
       <div className="article-image">
-        <Carousel 
-        showThumbs={false}
-        swipeable={true}
-        centerMode
-        >
-           {listSlide.map((slide, index) => (
-              <img
+        <Carousel showThumbs={false} swipeable={true} centerMode>
+          {listSlide.map((slide, index) => (
+            <img
               key={index}
               src={slide.image}
               alt={slide.image}
@@ -306,28 +346,39 @@ export function HomeComponent() {
         {/* End comment */}
 
         <div className="share flex fle-col items-start">
-          <Button className="flex py-2 px-4 flex-col gap-1 rounded-full bg-slate-50">
-            <div className="flex gap-2">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="18"
-                height="20"
-                viewBox="0 0 18 20"
-                fill="none"
-              >
-                <path
-                  d="M5.96889 11.359L12.04 14.941M12.0311 5.059L5.96889 8.641M17 3.7C17 5.19117 15.8061 6.4 14.3333 6.4C12.8606 6.4 11.6667 5.19117 11.6667 3.7C11.6667 2.20883 12.8606 1 14.3333 1C15.8061 1 17 2.20883 17 3.7ZM6.33333 10C6.33333 11.4912 5.13943 12.7 3.66667 12.7C2.19391 12.7 1 11.4912 1 10C1 8.50883 2.19391 7.3 3.66667 7.3C5.13943 7.3 6.33333 8.50883 6.33333 10ZM17 16.3C17 17.7912 15.8061 19 14.3333 19C12.8606 19 11.6667 17.7912 11.6667 16.3C11.6667 14.8088 12.8606 13.6 14.3333 13.6C15.8061 13.6 17 14.8088 17 16.3Z"
-                  stroke="#334155"
-                  stroke-width="2"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                />
-              </svg>
-              <div className="text-slate-500 text-m font-normal leading-6">
-                Chia sẻ
-              </div>
-            </div>
-          </Button>
+          <DropdownMenu>
+            <DropdownMenuTrigger>
+              <Button className="flex py-2 px-4 flex-col gap-1 rounded-full bg-slate-50">
+                <div className="flex gap-2">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="18"
+                    height="20"
+                    viewBox="0 0 18 20"
+                    fill="none"
+                  >
+                    <path
+                      d="M5.96889 11.359L12.04 14.941M12.0311 5.059L5.96889 8.641M17 3.7C17 5.19117 15.8061 6.4 14.3333 6.4C12.8606 6.4 11.6667 5.19117 11.6667 3.7C11.6667 2.20883 12.8606 1 14.3333 1C15.8061 1 17 2.20883 17 3.7ZM6.33333 10C6.33333 11.4912 5.13943 12.7 3.66667 12.7C2.19391 12.7 1 11.4912 1 10C1 8.50883 2.19391 7.3 3.66667 7.3C5.13943 7.3 6.33333 8.50883 6.33333 10ZM17 16.3C17 17.7912 15.8061 19 14.3333 19C12.8606 19 11.6667 17.7912 11.6667 16.3C11.6667 14.8088 12.8606 13.6 14.3333 13.6C15.8061 13.6 17 14.8088 17 16.3Z"
+                      stroke="#334155"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    />
+                  </svg>
+                  <div className="text-slate-500 text-m font-normal leading-6">
+                    Chia sẻ
+                  </div>
+                </div>
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end" className="w-56">
+              <Link href="/">
+                <DropdownMenuItem className="cursor-pointer">
+                Sao chép liên kết
+                </DropdownMenuItem>
+              </Link>
+            </DropdownMenuContent>
+          </DropdownMenu>
         </div>
         {/* End share */}
       </div>

@@ -4,7 +4,6 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
-  DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
@@ -21,7 +20,9 @@ export default async function Navbar() {
     return (
       <div className="py-4 flex items-center justify-center self-stretch">
         <div className="flex justify-between items-center">
-          <div className="logo w-10 h-10 flex-shrink-0">
+          <Link
+          href="/"
+          className="logo w-10 h-10 flex-shrink-0">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="36"
@@ -45,11 +46,11 @@ export default async function Navbar() {
                 stroke-width="2"
               />
             </svg>
-          </div>
+          </Link>
           {/* end logo */}
 
           <div className="nav-bar flex justify-center items-center gap-1">
-            <Button className="home-button flex h-10 py-2 px-5 justify-center items-center rounded-lg">
+            <Link href="/" className="home-button flex h-10 py-2 px-5 justify-center items-center rounded-lg">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="20"
@@ -64,9 +65,9 @@ export default async function Navbar() {
                   fill="#0F172A"
                 />
               </svg>
-            </Button>
+            </Link>
 
-            <Button className="home-button flex h-10 py-2 px-5 justify-center items-center rounded-lg">
+            <Link href="/" className="home-button flex h-10 py-2 px-5 justify-center items-center rounded-lg">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="20"
@@ -82,9 +83,9 @@ export default async function Navbar() {
                   stroke-linejoin="round"
                 />
               </svg>
-            </Button>
+            </Link>
 
-            <Button className="flex justify-center items-center gap-1">
+            <Link href="/" className="flex justify-center items-center gap-1">
               <div className="flex w-10 h-10 p-[6px] flex-col justify-center items-center gap-1 flex-shrink-0 rounded-tl-[10px] rounded-br-[10px] rounded-tr-[4px] rounded-bl-[4px] border border-solid border-slate-100">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -102,9 +103,9 @@ export default async function Navbar() {
                   />
                 </svg>
               </div>
-            </Button>
+            </Link>
 
-            <Button className="home-button flex h-10 py-2 px-5 justify-center items-center rounded-lg">
+            <Link href="/" className="home-button flex h-10 py-2 px-5 justify-center items-center rounded-lg">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="20"
@@ -120,9 +121,9 @@ export default async function Navbar() {
                   stroke-linejoin="round"
                 />
               </svg>
-            </Button>
+            </Link>
 
-            <Button className="home-button flex h-10 py-2 px-5 justify-center items-center rounded-lg">
+            <Link href="/" className="home-button flex h-10 py-2 px-5 justify-center items-center rounded-lg">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="18"
@@ -138,7 +139,7 @@ export default async function Navbar() {
                   stroke-linejoin="round"
                 />
               </svg>
-            </Button>
+            </Link>
 
             {/* <Button className=" h-10 flex p-2 rounded-full flex-col justify-center items-start gap-1 flex-cold bg-slate-100">
               <div className="flex gap-2">
@@ -167,7 +168,6 @@ export default async function Navbar() {
               </div>
             </Button> */}
             <div className="space-x-2 flex items-center">
-              <ModeToggle />
               {session ? (
                 <DropdownMenu>
                   <DropdownMenuTrigger>
@@ -190,13 +190,6 @@ export default async function Navbar() {
                                 stroke-linejoin="round"
                               />
                             </svg>
-                            <svg
-                              xmlns="http://www.w3.org/2000/svg"
-                              width="21"
-                              height="20"
-                              viewBox="0 0 21 20"
-                              fill="none"
-                            ></svg>
                           </div>
                         </Button>
                       </AvatarFallback>
