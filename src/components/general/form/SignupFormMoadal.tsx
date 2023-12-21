@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import { useSession, signIn, signOut } from "next-auth/react";
 import SignupForm from "@/components/auth/signup/SignupForm";
 import { TypeFormModal } from "@/lib/constant/TypeFormModal";
 
@@ -50,7 +51,9 @@ export const SignupFormModal =
                             </div>
 
                             <div className="flex flex-col  gap-2.5">
-                                <button className="flex p-2 flex-col items-start gap-1 self-stretch rounded-full border border-slate-100 w-full">
+                                <button className="flex p-2 flex-col items-start gap-1 self-stretch rounded-full border border-slate-100 w-full"
+                                    onClick={() => signIn('g')}
+                                >
                                     <div className="flex gap-2 w-full">
                                         <svg
                                             xmlns="http://www.w3.org/2000/svg"

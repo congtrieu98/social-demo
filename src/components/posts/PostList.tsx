@@ -7,7 +7,6 @@ import { Button } from "../ui/button";
 import { useToast } from "../ui/use-toast";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import { io } from "socket.io-client"
 
 import { Dialog, DialogContent, DialogTrigger } from "../ui/dialogAuth";
 import { LoginFormModal } from "../general/form/LoginFormModal";
@@ -102,7 +101,7 @@ const Post = ({ post }: { post: CompletePost }) => {
     }
   })
 
-  const {mutate} = trpc.ws.tesMutation.useMutation()
+  const { mutate } = trpc.ws.tesMutation.useMutation()
 
   const {
     data: isPostLiked,

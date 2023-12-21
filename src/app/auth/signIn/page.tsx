@@ -4,19 +4,22 @@
 import { ForgotForm } from "@/components/general/form/ForgotForm";
 import { LoginFormModal } from "@/components/general/form/LoginFormModal";
 import { SignupFormModal } from "@/components/general/form/SignupFormMoadal";
-import { Button } from "@/components/ui/button";
-import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
+
+import { Dialog, DialogContent } from "@/components/ui/dialogAuth";
 import { TypeFormModal } from "@/lib/constant/TypeFormModal";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 
 export default function SignnIn() {
+    const router = useRouter();
     const [open, setOpen] = useState(true);
-    const [typeFormModal, setTypeFormModal] = useState<TypeFormModal>(0);
+    const [typeFormModal, setTypeFormModal] = useState<TypeFormModal>(1);
 
     const handleChangeModal = () => {
         setOpen(!open)
         setTypeFormModal(0)
+        router.push('/')
     }
     return (
         <>
