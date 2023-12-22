@@ -31,7 +31,7 @@ export default function RootLayout({
           <NextAuthProvider>
             <TrpcProvider>
               <Navbar />
-              <main className="max-w-[574px] mx-auto md:p-0 p-6">
+              <main className="max-w-[574px] mx-auto md:p-0 p-4">
                 {children}
               </main>
             </TrpcProvider>

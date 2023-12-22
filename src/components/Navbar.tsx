@@ -18,7 +18,7 @@ export default async function Navbar() {
   // if (session?.user) {
   return (
     <div className="py-4 flex items-center justify-center self-stretch">
-      <div className="flex justify-between items-center lg:min-w-[1168px] ">
+      <div className="flex justify-between items-center lg:min-w-[1168px] sm:flex-none flex-1 px-8 ">
         <div className="logo w-10 h-10 flex-shrink-0">
           <Link href="/">
             <svg
@@ -48,7 +48,7 @@ export default async function Navbar() {
         </div>
         {/* end logo */}
 
-        <div className="nav-bar flex justify-center items-center gap-1">
+        <div className="nav-bar hidden sm:flex justify-center items-center gap-1">
           <Link href="/" className="home-button flex h-10 py-2 px-5 justify-center items-center rounded-lg">
             <svg
               xmlns="http://www.w3.org/2000/svg"

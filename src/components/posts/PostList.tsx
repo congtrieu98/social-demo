@@ -8,7 +8,7 @@ import { useToast } from "../ui/use-toast";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
-import { Dialog, DialogContent, DialogTrigger } from "../ui/dialogAuth";
+import { Dialog, DialogContent, DialogTrigger } from "../ui/dialogCommon";
 import { LoginFormModal } from "../general/form/LoginFormModal";
 import { TypeFormModal } from "@/lib/constant/TypeFormModal";
 import { SignupFormModal } from "../general/form/SignupFormMoadal";

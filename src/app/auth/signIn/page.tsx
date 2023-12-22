@@ -5,7 +5,7 @@ import { ForgotForm } from "@/components/general/form/ForgotForm";
 import { LoginFormModal } from "@/components/general/form/LoginFormModal";
 import { SignupFormModal } from "@/components/general/form/SignupFormMoadal";
 
-import { Dialog, DialogContent } from "@/components/ui/dialogAuth";
+import { Dialog, DialogContent } from "@/components/ui/dialogCommon";
 import { TypeFormModal } from "@/lib/constant/TypeFormModal";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
